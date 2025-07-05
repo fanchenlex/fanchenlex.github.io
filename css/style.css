@@ -11677,3 +11677,38 @@ figure.highlight.foldable div.level-left {
     padding: 1.5rem 1rem;
   }
 }
+.footer-donate {
+  text-align: center;
+}
+.footer-donate .donate-icon-item {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.footer-donate .donate-icon-item .donate-qrcode {
+  display: none;
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  border-radius: 4px;
+  z-index: 100;
+}
+.footer-donate .donate-icon-item .donate-qrcode img {
+  display: block;
+  max-width: none;
+  width: 240px;
+  height: auto;
+}
+.footer-donate .donate-icon-item:hover .donate-qrcode {
+  display: block;
+}
+body {
+  background: url("../img/background.jpg") no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
