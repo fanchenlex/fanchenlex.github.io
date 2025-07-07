@@ -6,7 +6,7 @@
   <link href="https://fanchenlex.github.io/atom.xml" rel="self"/>
   
   <link href="https://fanchenlex.github.io/"/>
-  <updated>2025-07-06T09:58:35.228Z</updated>
+  <updated>2025-07-07T09:33:44.382Z</updated>
   <id>https://fanchenlex.github.io/</id>
   
   <author>
@@ -17,20 +17,21 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>personal introduction</title>
+    <title>李文卓</title>
     <link href="https://fanchenlex.github.io/2025/07/06/hello-world/"/>
     <id>https://fanchenlex.github.io/2025/07/06/hello-world/</id>
     <published>2025-07-06T07:53:37.000Z</published>
-    <updated>2025-07-06T09:58:35.228Z</updated>
+    <updated>2025-07-07T09:33:44.382Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to my blog! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<p><img src="/img/profile1.jpg" alt="Wenzhuo Li at Fushimi Ward, Kyoto —— June 2025"></p><p>Welcome to my blog! This site showcases different aspects of my academic journey and personal life. On this page, you’ll find a brief introduction to myself.</p><h1 id="Personal-Introduction"><a href="#Personal-Introduction" class="headerlink" title="Personal Introduction"></a>Personal Introduction</h1><p>My name is Wenzhuo Li, and I’m from Xianyang, Shaanxi Province, China.</p><p>I recently graduated from <img src="/img/xidian_logo.png" width="20" style="vertical-align: middle; margin-right: 5px;" />Xidian University, majoring in Computer Science and Technology. I will soon begin my master’s studies in Intelligent Science and Technology and conduct research at the <img src="/img/palm_logo.png" width="20" style="vertical-align: middle; margin-right: 5px;" />PALM Laboratory, <img src="/img/csa_logo.png" width="20" style="vertical-align: middle; margin-right: 5px;" />School of Computer Science and Engineering, <img src="/img/seu_logo.svg" width="20" style="vertical-align: middle; margin-right: 5px;" />Southeast University.</p><p>My primary research interest lies in Embodied Intelligence, which explores the integration of perception, cognition, and action in intelligent agents.</p><p>Through this blog, I aim to share insights from my academic journey, discuss technical challenges, and engage in meaningful exchange with fellow learners and researchers.As a new blogger, I hope to record my learning journey and life reflections through blogging, to motivate myself to keep progressing. I warmly welcome like-minded friends to connect and exchange ideas with me!</p><h1 id="Interests-WenZhuo"><a href="#Interests-WenZhuo" class="headerlink" title="Interests @ WenZhuo"></a>Interests @ WenZhuo</h1><ul><li><strong>Embodied AI</strong>: Robotic Manipulation, Dexterous Grasping</li></ul><h1 id="News-WenZhuo"><a href="#News-WenZhuo" class="headerlink" title="News @ WenZhuo"></a>News @ WenZhuo</h1><p>TO DO…</p><h1 id="Transcript-WenZhuo"><a href="#Transcript-WenZhuo" class="headerlink" title="Transcript @ WenZhuo"></a>Transcript @ WenZhuo</h1><p>TO DO…</p><h1 id="Coding-WenZhuo"><a href="#Coding-WenZhuo" class="headerlink" title="Coding @ WenZhuo"></a>Coding @ WenZhuo</h1><p>TO DO…</p>]]></content>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;Welcome to my blog! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for more info. If you get any</summary>
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;/img/profile1.jpg&quot; alt=&quot;Wenzhuo Li at Fushimi Ward, Kyoto —— June 2025&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Welcome to my blog! This site showcases</summary>
         
       
     
