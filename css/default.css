@@ -11712,6 +11712,38 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
+.announcement {
+  position: relative;
+  display: block;
+/* 整体区域应用渐变背景 */
+  background: linear-gradient(to bottom, #3273dc, #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+/* 所有子元素继承文字渐变 */
+/* 悬停样式（覆盖继承） */
+}
+.announcement .announcement-link {
+/* 关键：不再自己设置渐变背景，只是透明文字 */
+  background: none;
+  -webkit-background-clip: inherit;
+  -webkit-text-fill-color: inherit;
+  background-clip: inherit;
+  text-fill-color: inherit;
+  font-weight: 600;
+  display: inline-block;
+  transition: 0.3s ease-in-out;
+}
+.announcement .announcement-link:hover {
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: #666;
+  color: #666;
+}
+.announcement a:hover {
+  text-decoration: underline;
+}
 #universe {
   display: none;
 }
