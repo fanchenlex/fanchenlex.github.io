@@ -6,7 +6,7 @@
   <link href="https://fanchenlex.github.io/atom.xml" rel="self"/>
   
   <link href="https://fanchenlex.github.io/"/>
-  <updated>2025-09-10T06:40:17.340Z</updated>
+  <updated>2025-09-10T09:13:05.781Z</updated>
   <id>https://fanchenlex.github.io/</id>
   
   <author>
@@ -21,22 +21,16 @@
     <link href="https://fanchenlex.github.io/2025/07/07/diary/southeast_letter/"/>
     <id>https://fanchenlex.github.io/2025/07/07/diary/southeast_letter/</id>
     <published>2025-07-06T16:00:00.000Z</published>
-    <updated>2025-09-10T06:40:17.340Z</updated>
+    <updated>2025-09-10T09:13:05.781Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="hello"><a href="#hello" class="headerlink" title="hello!"></a>hello!</h1>]]></content>
+    <content type="html"><![CDATA[<h1 id="hello"><a href="#hello" class="headerlink" title="hello!"></a>hello!</h1><span id="more"></span>]]></content>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;hello&quot;&gt;&lt;a href=&quot;#hello&quot; class=&quot;headerlink&quot;</summary>
-        
-      
+    <summary type="html">&lt;h1 id=&quot;hello&quot;&gt;&lt;a href=&quot;#hello&quot; class=&quot;headerlink&quot; title=&quot;hello!&quot;&gt;&lt;/a&gt;hello!&lt;/h1&gt;</summary>
     
     
     
-    <category term="Awards" scheme="https://fanchenlex.github.io/categories/Awards/"/>
+    <category term="diary" scheme="https://fanchenlex.github.io/categories/diary/"/>
     
     
     <category term="addmission letter" scheme="https://fanchenlex.github.io/tags/addmission-letter/"/>
@@ -48,18 +42,12 @@
     <link href="https://fanchenlex.github.io/2025/07/01/diary/japan_Kansai/"/>
     <id>https://fanchenlex.github.io/2025/07/01/diary/japan_Kansai/</id>
     <published>2025-07-01T06:30:37.000Z</published>
-    <updated>2025-09-10T06:37:03.955Z</updated>
+    <updated>2025-09-10T09:12:55.730Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="hello"><a href="#hello" class="headerlink" title="hello!"></a>hello!</h1>]]></content>
+    <content type="html"><![CDATA[<h1 id="hello"><a href="#hello" class="headerlink" title="hello!"></a>hello!</h1><span id="more"></span>]]></content>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;hello&quot;&gt;&lt;a href=&quot;#hello&quot; class=&quot;headerlink&quot;</summary>
-        
-      
+    <summary type="html">&lt;h1 id=&quot;hello&quot;&gt;&lt;a href=&quot;#hello&quot; class=&quot;headerlink&quot; title=&quot;hello!&quot;&gt;&lt;/a&gt;hello!&lt;/h1&gt;</summary>
     
     
     
@@ -75,18 +63,12 @@
     <link href="https://fanchenlex.github.io/2025/06/20/diary/xidian_memories/"/>
     <id>https://fanchenlex.github.io/2025/06/20/diary/xidian_memories/</id>
     <published>2025-06-20T03:05:25.000Z</published>
-    <updated>2025-09-10T06:41:14.424Z</updated>
+    <updated>2025-09-10T09:12:48.423Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="hello"><a href="#hello" class="headerlink" title="hello!"></a>hello!</h1>]]></content>
+    <content type="html"><![CDATA[<h1 id="hello"><a href="#hello" class="headerlink" title="hello!"></a>hello!</h1><span id="more"></span>]]></content>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;hello&quot;&gt;&lt;a href=&quot;#hello&quot; class=&quot;headerlink&quot;</summary>
-        
-      
+    <summary type="html">&lt;h1 id=&quot;hello&quot;&gt;&lt;a href=&quot;#hello&quot; class=&quot;headerlink&quot; title=&quot;hello!&quot;&gt;&lt;/a&gt;hello!&lt;/h1&gt;</summary>
     
     
     
@@ -98,63 +80,58 @@
   </entry>
   
   <entry>
-    <title>collaboration</title>
+    <title>new title</title>
     <link href="https://fanchenlex.github.io/2025/06/19/collaboration/index/"/>
     <id>https://fanchenlex.github.io/2025/06/19/collaboration/index/</id>
     <published>2025-06-19T03:05:08.000Z</published>
-    <updated>2025-06-19T03:05:10.000Z</updated>
+    <updated>2025-09-10T09:15:02.211Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="hello"><a href="#hello" class="headerlink" title="hello"></a>hello</h1><span id="more"></span>]]></content>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;hello&quot;&gt;&lt;a href=&quot;#hello&quot; class=&quot;headerlink&quot; title=&quot;hello&quot;&gt;&lt;/a&gt;hello&lt;/h1&gt;</summary>
     
     
     
+    <category term="collaboration" scheme="https://fanchenlex.github.io/categories/collaboration/"/>
     
     
   </entry>
   
   <entry>
-    <title>projects</title>
+    <title>new title</title>
     <link href="https://fanchenlex.github.io/2025/06/19/projects/index/"/>
     <id>https://fanchenlex.github.io/2025/06/19/projects/index/</id>
     <published>2025-06-19T03:05:02.000Z</published>
-    <updated>2025-06-19T03:05:04.000Z</updated>
+    <updated>2025-09-10T09:13:13.999Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="to-do"><a href="#to-do" class="headerlink" title="to do"></a>to do</h1><span id="more"></span>]]></content>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;to-do&quot;&gt;&lt;a href=&quot;#to-do&quot; class=&quot;headerlink&quot; title=&quot;to do&quot;&gt;&lt;/a&gt;to do&lt;/h1&gt;</summary>
     
     
     
-    
-    
-  </entry>
-  
-  <entry>
-    <title>awards</title>
-    <link href="https://fanchenlex.github.io/2025/06/19/awards/index/"/>
-    <id>https://fanchenlex.github.io/2025/06/19/awards/index/</id>
-    <published>2025-06-19T03:03:37.000Z</published>
-    <updated>2025-09-10T06:30:11.404Z</updated>
-    
-    
-    
+    <category term="projects" scheme="https://fanchenlex.github.io/categories/projects/"/>
     
     
   </entry>
   
   <entry>
-    <title>blogs</title>
+    <title>new title</title>
     <link href="https://fanchenlex.github.io/2025/06/19/blogs/index/"/>
     <id>https://fanchenlex.github.io/2025/06/19/blogs/index/</id>
     <published>2025-06-19T03:03:37.000Z</published>
-    <updated>2025-07-07T05:47:10.000Z</updated>
+    <updated>2025-09-10T09:13:20.027Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Hello-world"><a href="#Hello-world" class="headerlink" title="Hello world"></a>Hello world</h1>]]></content>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;Hello-world&quot;&gt;&lt;a href=&quot;#Hello-world&quot; class=&quot;headerlink&quot; title=&quot;Hello world&quot;&gt;&lt;/a&gt;Hello</summary>
-        
-      
+    <content type="html"><![CDATA[<h1 id="Hello-world"><a href="#Hello-world" class="headerlink" title="Hello world"></a>Hello world</h1><span id="more"></span>]]></content>
     
     
+    <summary type="html">&lt;h1 id=&quot;Hello-world&quot;&gt;&lt;a href=&quot;#Hello-world&quot; class=&quot;headerlink&quot; title=&quot;Hello world&quot;&gt;&lt;/a&gt;Hello world&lt;/h1&gt;</summary>
+    
+    
+    
+    <category term="blogs" scheme="https://fanchenlex.github.io/categories/blogs/"/>
     
     
   </entry>
@@ -164,21 +141,16 @@
     <link href="https://fanchenlex.github.io/2024/05/01/awards/NationalScholarship/"/>
     <id>https://fanchenlex.github.io/2024/05/01/awards/NationalScholarship/</id>
     <published>2024-05-01T00:00:00.000Z</published>
-    <updated>2025-09-10T06:28:57.398Z</updated>
+    <updated>2025-09-10T09:13:39.124Z</updated>
     
-    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University  </li><li><strong>Date:</strong> May, 2024  </li><li><strong>Honor:</strong> Awarded the National Scholarship  </li><li><strong>Amount:</strong> ¥10,000<br>The National Scholarship is one of the most prestigious honors in Chinese universities, awarded to students with top performance in academics, research, and leadership.<br><img src="/img/NationalScholarship.jpg" alt="National Scholarship Certificate Photo"><br><img src="/img/NationalScholarshipCertificate.jpg" alt="National Scholarship Certificate"><br><img src="/img/NationalScholarshipCertificate_front.jpg" alt="National Scholarship Certificate front page"></li></ul>]]></content>
+    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University  </li><li><strong>Date:</strong> May, 2024  </li><li><strong>Honor:</strong> Awarded the National Scholarship  </li><li><strong>Amount:</strong> ¥10,000<span id="more"></span>The National Scholarship is one of the most prestigious honors in Chinese universities, awarded to students with top performance in academics, research, and leadership.<br><img src="/img/NationalScholarship.jpg" alt="National Scholarship Certificate Photo"><br><img src="/img/NationalScholarshipCertificate.jpg" alt="National Scholarship Certificate"><br><img src="/img/NationalScholarshipCertificate_front.jpg" alt="National Scholarship Certificate front page"></li></ul>]]></content>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Institution:&lt;/strong&gt; Xidian University  &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; May, 2024  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Honor:&lt;/strong&gt;</summary>
-        
-      
+&lt;li&gt;&lt;strong&gt;Honor:&lt;/strong&gt; Awarded the National Scholarship  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amount:&lt;/strong&gt; ¥10,000</summary>
     
     
     
@@ -192,20 +164,16 @@
     <link href="https://fanchenlex.github.io/2023/12/01/awards/CMS2023/"/>
     <id>https://fanchenlex.github.io/2023/12/01/awards/CMS2023/</id>
     <published>2023-12-01T00:00:00.000Z</published>
-    <updated>2025-09-10T06:27:41.252Z</updated>
+    <updated>2025-09-10T09:10:50.646Z</updated>
     
-    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Chinese Mathematical Society  </li><li><strong>Date:</strong> December, 2023  </li><li><strong>Honor:</strong> First Prize in Shaanxi Province  </li><li><strong>Ranking:</strong> Top 8%</li></ul><p>This award recognizes excellent performance in the highly competitive nationwide mathematics contest for undergraduates.<br><img src="/img/%E5%85%A8%E5%9B%BD%E6%95%B0%E7%AB%9E%E7%9C%81%E4%B8%80.JPG" alt="National College Student Mathematics Competition (Non-Mathematics A Category)"></p>]]></content>
+    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Chinese Mathematical Society  </li><li><strong>Date:</strong> December, 2023  </li><li><strong>Honor:</strong> First Prize in Shaanxi Province  </li><li><strong>Ranking:</strong> Top 8%  <span id="more"></span>This award recognizes excellent performance in the highly competitive nationwide mathematics contest for undergraduates.<br><img src="/img/%E5%85%A8%E5%9B%BD%E6%95%B0%E7%AB%9E%E7%9C%81%E4%B8%80.JPG" alt="National College Student Mathematics Competition (Non-Mathematics A Category)"></li></ul>]]></content>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Institution:&lt;/strong&gt; Chinese Mathematical Society  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; December, 2023 </summary>
-        
-      
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; December, 2023  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Honor:&lt;/strong&gt; First Prize in Shaanxi Province  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ranking:&lt;/strong&gt; Top 8%</summary>
     
     
     
@@ -219,47 +187,16 @@
     <link href="https://fanchenlex.github.io/2023/12/01/awards/HuaweiIntelligentBaseScholarship2023/"/>
     <id>https://fanchenlex.github.io/2023/12/01/awards/HuaweiIntelligentBaseScholarship2023/</id>
     <published>2023-12-01T00:00:00.000Z</published>
-    <updated>2025-09-10T06:28:55.110Z</updated>
+    <updated>2025-09-10T09:11:04.525Z</updated>
     
-    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University &amp; Huawei  </li><li><strong>Date:</strong> December, 2023  </li><li><strong>Honor:</strong> Huawei “Intelligent Base” Industry-Education Integration Scholarship  </li><li><strong>Amount:</strong> ¥5,000</li></ul><p>This scholarship recognizes students who demonstrate strong abilities in innovative research and outstanding potential in the ICT field.</p><iframe src="/pdf/2023关于公布华为智能基座奖教金奖学金文件.pdf" width="100%" height="600px"></iframe>]]></content>
+    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University &amp; Huawei  </li><li><strong>Date:</strong> December, 2023  </li><li><strong>Honor:</strong> Huawei “Intelligent Base” Industry-Education Integration Scholarship  </li><li><strong>Amount:</strong> ¥5,000  <span id="more"></span>This scholarship recognizes students who demonstrate strong abilities in innovative research and outstanding potential in the ICT field.<iframe src="/pdf/2023关于公布华为智能基座奖教金奖学金文件.pdf" width="100%" height="600px"></iframe></li></ul>]]></content>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Institution:&lt;/strong&gt; Xidian University &amp;amp; Huawei  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; December, 2023 </summary>
-        
-      
-    
-    
-    
-    <category term="Awards" scheme="https://fanchenlex.github.io/categories/Awards/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>🎓 Excellent Student Cadre Award</title>
-    <link href="https://fanchenlex.github.io/2023/11/01/awards/ExcellentCadreAward/"/>
-    <id>https://fanchenlex.github.io/2023/11/01/awards/ExcellentCadreAward/</id>
-    <published>2023-11-01T00:00:00.000Z</published>
-    <updated>2025-09-10T06:28:48.118Z</updated>
-    
-    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University  </li><li><strong>Date:</strong> November, 2023  </li><li><strong>Honor:</strong> Excellent Student Cadre Award  </li><li><strong>Ranking:</strong> Top 2%</li></ul><p>This award is granted to student leaders who have made outstanding contributions in class and student union work while maintaining excellent academic performance.<br><img src="/img/%E4%BC%98%E7%A7%80%E7%8F%AD%E5%B9%B2%E9%83%A8.png" alt="Excellent Student Cadre Award"></p>]]></content>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Institution:&lt;/strong&gt; Xidian University  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; November, 2023 </summary>
-        
-      
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; December, 2023  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Honor:&lt;/strong&gt; Huawei “Intelligent Base” Industry-Education Integration Scholarship  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amount:&lt;/strong&gt; ¥5,000</summary>
     
     
     
@@ -273,20 +210,39 @@
     <link href="https://fanchenlex.github.io/2023/11/01/awards/ExcellentStudentAward/"/>
     <id>https://fanchenlex.github.io/2023/11/01/awards/ExcellentStudentAward/</id>
     <published>2023-11-01T00:00:00.000Z</published>
-    <updated>2025-09-10T06:28:52.320Z</updated>
+    <updated>2025-09-10T09:09:35.343Z</updated>
     
-    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University  </li><li><strong>Date:</strong> November, 2023  </li><li><strong>Honor:</strong> Excellent Student Award  </li><li><strong>Ranking:</strong> Top 5%</li></ul><h2 id="This-award-recognizes-students-who-achieve-excellence-in-both-academic-and-personal-development-at-Xidian-University"><a href="#This-award-recognizes-students-who-achieve-excellence-in-both-academic-and-personal-development-at-Xidian-University" class="headerlink" title="This award recognizes students who achieve excellence in both academic and personal development at Xidian University."></a>This award recognizes students who achieve excellence in both academic and personal development at Xidian University.</h2><p><img src="/img/%E6%A0%A1%E4%BC%98%E7%A7%80%E5%AD%A6%E7%94%9F.jpg" alt="Outstanding Class Honor"></p><h2 id="Got-it-again-next-year"><a href="#Got-it-again-next-year" class="headerlink" title="Got it again next year!"></a>Got it again next year!</h2><p><img src="/img/%E6%A0%A1%E4%BC%98%E7%A7%80%E5%AD%A6%E7%94%9F2.jpg" alt="Outstanding Class Honor"></p>]]></content>
+    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University  </li><li><strong>Date:</strong> November, 2023  </li><li><strong>Honor:</strong> Excellent Student Award  </li><li><strong>Ranking:</strong> Top 5%  <span id="more"></span></li></ul><h2 id="This-award-recognizes-students-who-achieve-excellence-in-both-academic-and-personal-development-at-Xidian-University"><a href="#This-award-recognizes-students-who-achieve-excellence-in-both-academic-and-personal-development-at-Xidian-University" class="headerlink" title="This award recognizes students who achieve excellence in both academic and personal development at Xidian University."></a>This award recognizes students who achieve excellence in both academic and personal development at Xidian University.</h2><p><img src="/img/%E6%A0%A1%E4%BC%98%E7%A7%80%E5%AD%A6%E7%94%9F.jpg" alt="Outstanding Class Honor"></p><h2 id="Got-it-again-next-year"><a href="#Got-it-again-next-year" class="headerlink" title="Got it again next year!"></a>Got it again next year!</h2><p><img src="/img/%E6%A0%A1%E4%BC%98%E7%A7%80%E5%AD%A6%E7%94%9F2.jpg" alt="Outstanding Class Honor"></p>]]></content>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Institution:&lt;/strong&gt; Xidian University  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; November, 2023 </summary>
-        
-      
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; November, 2023  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Honor:&lt;/strong&gt; Excellent Student Award  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ranking:&lt;/strong&gt; Top 5%</summary>
+    
+    
+    
+    <category term="Awards" scheme="https://fanchenlex.github.io/categories/Awards/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>🎓 Excellent Student Cadre Award</title>
+    <link href="https://fanchenlex.github.io/2023/11/01/awards/ExcellentCadreAward/"/>
+    <id>https://fanchenlex.github.io/2023/11/01/awards/ExcellentCadreAward/</id>
+    <published>2023-11-01T00:00:00.000Z</published>
+    <updated>2025-09-10T09:10:57.100Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University  </li><li><strong>Date:</strong> November, 2023  </li><li><strong>Honor:</strong> Excellent Student Cadre Award  </li><li><strong>Ranking:</strong> Top 2%  <span id="more"></span>This award is granted to student leaders who have made outstanding contributions in class and student union work while maintaining excellent academic performance.<br><img src="/img/%E4%BC%98%E7%A7%80%E7%8F%AD%E5%B9%B2%E9%83%A8.png" alt="Excellent Student Cadre Award"></li></ul>]]></content>
+    
+    
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Institution:&lt;/strong&gt; Xidian University  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; November, 2023  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Honor:&lt;/strong&gt; Excellent Student Cadre Award  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ranking:&lt;/strong&gt; Top 2%</summary>
     
     
     
@@ -300,20 +256,17 @@
     <link href="https://fanchenlex.github.io/2023/11/01/awards/OutstandingClass/"/>
     <id>https://fanchenlex.github.io/2023/11/01/awards/OutstandingClass/</id>
     <published>2023-11-01T00:00:00.000Z</published>
-    <updated>2025-09-10T06:29:03.147Z</updated>
+    <updated>2025-09-10T09:11:13.981Z</updated>
     
-    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University  </li><li><strong>Date:</strong> November, 2023  </li><li><strong>Honor:</strong> Outstanding Class (on behalf of Class 2103014)  </li><li><strong>Ranking:</strong> Top 5%  </li><li><strong>Prize:</strong> ¥1,000</li></ul><p>As the class and college representative, I accepted the university-level “Outstanding Class” award on behalf of my class.<br><img src="/img/2103014%E7%8F%AD%E7%BA%A7%E5%90%88%E7%85%A7.jpg" alt="Class photo"><br><img src="/img/%E5%85%88%E8%BF%9B%E7%8F%AD%E7%BA%A7%E7%AD%94%E8%BE%A9.png" alt="Defense scene"><br><img src="/img/%E5%85%88%E8%BF%9B%E7%8F%AD%E7%BA%A7.jpg" alt="Outstanding Class Honor"></p>]]></content>
+    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University  </li><li><strong>Date:</strong> November, 2023  </li><li><strong>Honor:</strong> Outstanding Class (on behalf of Class 2103014)  </li><li><strong>Ranking:</strong> Top 5%  </li><li><strong>Prize:</strong> ¥1,000  <span id="more"></span>As the class and college representative, I accepted the university-level “Outstanding Class” award on behalf of my class.<br><img src="/img/2103014%E7%8F%AD%E7%BA%A7%E5%90%88%E7%85%A7.jpg" alt="Class photo"><br><img src="/img/%E5%85%88%E8%BF%9B%E7%8F%AD%E7%BA%A7%E7%AD%94%E8%BE%A9.png" alt="Defense scene"><br><img src="/img/%E5%85%88%E8%BF%9B%E7%8F%AD%E7%BA%A7.jpg" alt="Outstanding Class Honor"></li></ul>]]></content>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Institution:&lt;/strong&gt; Xidian University  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; November, 2023 </summary>
-        
-      
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; November, 2023  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Honor:&lt;/strong&gt; Outstanding Class (on behalf of Class 2103014)  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ranking:&lt;/strong&gt; Top 5%  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prize:&lt;/strong&gt; ¥1,000</summary>
     
     
     
@@ -327,20 +280,15 @@
     <link href="https://fanchenlex.github.io/2023/06/01/awards/SHJK2023/"/>
     <id>https://fanchenlex.github.io/2023/06/01/awards/SHJK2023/</id>
     <published>2023-06-01T00:00:00.000Z</published>
-    <updated>2025-09-10T06:03:07.809Z</updated>
+    <updated>2025-09-10T09:11:18.741Z</updated>
     
-    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Shaanxi Mathematical Society  </li><li><strong>Date:</strong> June, 2023  </li><li><strong>Honor:</strong> Second Prize</li></ul><p>This award recognizes my solid mathematical foundation and problem-solving skills in the provincial-level mathematics competition.<br><img src="/img/%E6%95%B0%E7%AB%9E%E7%9C%81%E4%BA%8C.png" alt="Shaanxi Province Advanced Mathematical Competition"></p>]]></content>
+    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Shaanxi Mathematical Society  </li><li><strong>Date:</strong> June, 2023  </li><li><strong>Honor:</strong> Second Prize  <span id="more"></span>This award recognizes my solid mathematical foundation and problem-solving skills in the provincial-level mathematics competition.<br><img src="/img/%E6%95%B0%E7%AB%9E%E7%9C%81%E4%BA%8C.png" alt="Shaanxi Province Advanced Mathematical Competition"></li></ul>]]></content>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Institution:&lt;/strong&gt; Shaanxi Mathematical Society  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; June, 2023 </summary>
-        
-      
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; June, 2023  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Honor:&lt;/strong&gt; Second Prize</summary>
     
     
     
@@ -354,20 +302,16 @@
     <link href="https://fanchenlex.github.io/2022/12/01/awards/NECCS2023/"/>
     <id>https://fanchenlex.github.io/2022/12/01/awards/NECCS2023/</id>
     <published>2022-12-01T00:00:00.000Z</published>
-    <updated>2025-09-10T06:28:59.761Z</updated>
+    <updated>2025-09-10T09:11:08.942Z</updated>
     
-    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> NECCS Organizing Committee  </li><li><strong>Date:</strong> December, 2022  </li><li><strong>Honor:</strong> National Second Prize  </li><li><strong>Ranking:</strong> Top 3%</li></ul><p>The NECCS is a highly influential English proficiency contest in China, testing listening, speaking, reading, and writing abilities of university students.</p><p><img src="/img/%E5%A4%A7%E8%8B%B1%E4%BA%8C%E7%AD%89.png" alt="NECCS"></p><p>Next year!</p><p><img src="/img/%E5%A4%A7%E8%8B%B1%E4%B8%89%E7%AD%89.jpg" alt="NECCS"></p>]]></content>
+    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> NECCS Organizing Committee  </li><li><strong>Date:</strong> December, 2022  </li><li><strong>Honor:</strong> National Second Prize  </li><li><strong>Ranking:</strong> Top 3%  <span id="more"></span>The NECCS is a highly influential English proficiency contest in China, testing listening, speaking, reading, and writing abilities of university students.</li></ul><p><img src="/img/%E5%A4%A7%E8%8B%B1%E4%BA%8C%E7%AD%89.png" alt="NECCS"></p><p>Next year!</p><p><img src="/img/%E5%A4%A7%E8%8B%B1%E4%B8%89%E7%AD%89.jpg" alt="NECCS"></p>]]></content>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Institution:&lt;/strong&gt; NECCS Organizing Committee  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; December, 2022 </summary>
-        
-      
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; December, 2022  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Honor:&lt;/strong&gt; National Second Prize  &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ranking:&lt;/strong&gt; Top 3%</summary>
     
     
     
