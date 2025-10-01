@@ -11780,6 +11780,57 @@ body {
 .pin-icon-right:hover {
   color: #fff; /* 悬停时颜色 */
 }
+.travel-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  justify-content: flex-start;
+  align-items: flex-start; /* 关键：防止被拉伸等高 */
+  background: transparent;
+}
+.travel-gallery .card {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: transparent;
+/* 改成基于宽度的百分比，不要固定 flex 拉伸 */
+  width: calc(33.333% - 8px);
+  display: inline-block;
+}
+.travel-gallery img {
+  display: block;
+  width: 100%;
+  height: auto; /* 保持比例 */
+  border-radius: inherit; /* 圆角跟随卡片 */
+  background: transparent;
+}
+.travel-gallery .overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  padding: 6px 10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: 0 0 6px 6px;
+}
+.travel-gallery .card:hover .overlay {
+  opacity: 1;
+}
+@media (max-width: 1024px) {
+  .travel-gallery .card {
+    width: calc(50% - 8px);
+  }
+}
+@media (max-width: 600px) {
+  .travel-gallery .card {
+    width: 100%;
+  }
+}
 body {
   counter-reset: card;
 }
