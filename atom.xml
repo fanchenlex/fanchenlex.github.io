@@ -303,15 +303,23 @@
   </entry>
   
   <entry>
-    <title>Reandings</title>
-    <link href="https://fanchenlex.github.io/reandings/index/"/>
-    <id>https://fanchenlex.github.io/reandings/index/</id>
+    <title>Diffusion Policy | RSS 2023 | Paper Reading</title>
+    <link href="https://fanchenlex.github.io/reandings/DP/"/>
+    <id>https://fanchenlex.github.io/reandings/DP/</id>
     <published>2025-06-19T03:05:20.000Z</published>
-    <updated>2025-10-01T14:36:10.274Z</updated>
+    <updated>2025-10-28T11:39:50.413Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。"><a href="#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。" class="headerlink" title="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。"></a>这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。</h1><span id="more"></span>]]></content>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot;&gt;&lt;a href=&quot;#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&quot;&gt;&lt;/a&gt;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&lt;/h1&gt;</summary>
     
     
     
+    <category term="paper reading" scheme="https://fanchenlex.github.io/categories/paper-reading/"/>
     
+    
+    <category term="reading" scheme="https://fanchenlex.github.io/tags/reading/"/>
     
   </entry>
   
