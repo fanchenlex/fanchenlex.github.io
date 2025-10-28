@@ -307,12 +307,12 @@
     <link href="https://fanchenlex.github.io/reandings/DP/"/>
     <id>https://fanchenlex.github.io/reandings/DP/</id>
     <published>2025-06-19T03:05:20.000Z</published>
-    <updated>2025-10-28T12:52:41.076Z</updated>
+    <updated>2025-10-28T13:02:31.565Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。"><a href="#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。" class="headerlink" title="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。"></a>这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。</h1><span id="more"></span><p>Diffusion Policy: Visuomotor Policy Learning via Action Diffusion</p><table>  <thead>    <tr>      <th>工作类型(首次/改进)</th>      <th>技术路线</th>      <th>创新点</th>      <th>日期</th>    </tr>  </thead>  <tbody>    <tr>      <td>首次</td>      <td>MLP, Hash Coding</td>      <td>多分辨率哈希编码</td>      <td>2025-03-27</td>    </tr>  </tbody></table>]]></content>
+    <content type="html"><![CDATA[<h2 id="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。"><a href="#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。" class="headerlink" title="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。"></a>这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。</h2><span id="more"></span><table style="border-collapse: collapse; width: 100%; text-align: center;">  <thead>    <tr style="background-color: #f9f9f9;">      <th style="border: 1px solid #ddd; padding: 8px;">工作类型(首次/改进)</th>      <th style="border: 1px solid #ddd; padding: 8px;">技术路线</th>      <th style="border: 1px solid #ddd; padding: 8px;">创新点</th>      <th style="border: 1px solid #ddd; padding: 8px;">日期</th>    </tr>  </thead>  <tbody>    <tr>      <td style="border: 1px solid #ddd; padding: 8px;">首次</td>      <td style="border: 1px solid #ddd; padding: 8px;">MLP, Hash Coding</td>      <td style="border: 1px solid #ddd; padding: 8px;">多分辨率哈希编码</td>      <td style="border: 1px solid #ddd; padding: 8px;">2025-03-27</td>    </tr>  </tbody></table>]]></content>
     
     
-    <summary type="html">&lt;h1 id=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot;&gt;&lt;a href=&quot;#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&quot;&gt;&lt;/a&gt;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&lt;/h1&gt;</summary>
+    <summary type="html">&lt;h2 id=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot;&gt;&lt;a href=&quot;#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&quot;&gt;&lt;/a&gt;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&lt;/h2&gt;</summary>
     
     
     
