@@ -6,7 +6,7 @@
   <link href="https://fanchenlex.github.io/atom.xml" rel="self"/>
   
   <link href="https://fanchenlex.github.io/"/>
-  <updated>2025-10-01T10:01:02.333Z</updated>
+  <updated>2025-11-02T05:25:55.974Z</updated>
   <id>https://fanchenlex.github.io/</id>
   
   <author>
@@ -15,6 +15,138 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RDP | RSS 2025 | Paper Reading</title>
+    <link href="https://fanchenlex.github.io/reandings/RDP/"/>
+    <id>https://fanchenlex.github.io/reandings/RDP/</id>
+    <published>2025-11-02T05:35:50.000Z</published>
+    <updated>2025-11-02T05:25:55.974Z</updated>
+    
+    <content type="html"><![CDATA[<p>Reactive Diffusion Policy:  Slow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation</p><h3 id="这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。"><a href="#这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。" class="headerlink" title="这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。"></a>这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。</h3><span id="more"></span><table style="width:100%; border-collapse:collapse;">  <thead style="border-bottom:1px solid #ccc;">    <tr>      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>      <th style="padding:8px; text-align:center;">技术路线</th>      <th style="padding:8px; text-align:center;">创新点</th>      <th style="padding:8px; text-align:center;">日期</th>    </tr>  </thead>  <tbody>    <tr>      <td style="padding:8px; text-align:center;">首次</td>      <td style="padding:8px; text-align:center;">快慢系统</td>      <td style="padding:8px; text-align:center;">双系统+力触觉的新思想</td>      <td style="padding:8px; text-align:center;">2025-10-04</td>    </tr>  </tbody></table><h2 id="1-What？"><a href="#1-What？" class="headerlink" title="1.What？"></a>1.What？</h2><p>提出TactAR（一种通过增强现实提供实时触觉反馈的低成本遥操作系统）<br>Reactive Diffusion Policy（RDP，一种新型慢快视觉触觉模仿学习算法）</p><h2 id="2-Why？"><a href="#2-Why？" class="headerlink" title="2.Why？"></a>2.Why？</h2><p>神经科学领域的一些研究成果表明，人类在执行接触密集型任务时，其过程可分为两个组成部分：1）前馈&#x2F;预测性动作；2）基于感官反馈（如触觉信号）的闭环微调。受此启发，我们致力于开发一种能模拟人类在执行复杂接触密集型任务时控制模式的机器人学习系统。</p><h2 id="3-How？"><a href="#3-How？" class="headerlink" title="3.How？"></a>3.How？</h2><p><img src="/img/RDP.png" alt="RDP Overview"><br>RDP采用双层架构：<br>（1）在低频下预测潜在空间中高层动作分块的慢速潜在扩散策略；<br>（2）在高频下实现闭环触觉反馈控制的快速非对称分词器<br>TactAR：Meta Quest3提供实时触觉&#x2F;力反馈<br>慢速网络（潜在扩散策略LDP）作为神经规划器，以低频（1-2Hz）在潜在空间预测高层动作块，类比预测性动作；快速网络（非对称分词器AT）作为可学习阻抗控制器，基于高频触觉反馈（20-30Hz）微调潜在动作块，类比闭环微调。该分层结构使慢速网络通过扩散模型和动作分块保持对复杂非马尔可夫动作的建模能力，而快速网络借助实时触觉反馈实现精确力控与快速响应的闭环控制。<br>首先通过训练非对称分词器将原始动作块编码至潜空间，其解码器将瞬时触觉表征与潜动作块分离作为输入；<br>非对称的含义是仅在解码器中将触觉表示作为输入。这种刻意设计的结构不对称性是为了确保潜在动作片段仅保留高层反馈策略，而精确位置则由解码器借助触觉信息进行预测。<br>策略学习阶段，慢速潜扩散策略(LDP)以类似扩散策略的方式根据观测数据预测潜动作块；<br>下采样后的潜在表示降低了计算成本；<br>AT中的不对称设计可将具有挑战性的反应行为排除在潜在动作片段之外，从而降低潜在扩散策略在低频观测下的学习难度并增强其泛化能力<br>推理阶段低频采样潜动作块，在每个块内执行动作时，最新触觉表征实时输入AT解码器以预测下一帧实际动作<br>采用相对末端执行器轨迹进行动作表征：不直接计算连续帧间的增量动作（可能导致较大累积误差），而是通过计算相对于基准坐标系的相对变换，将绝对位姿轨迹转换为相对轨迹。<br>我们计算策略推理与动作执行产生的延迟，并舍弃模型预测的前几个动作步，以向机器人发送精确匹配的动作</p><h2 id="4-Takeaways"><a href="#4-Takeaways" class="headerlink" title="4.Takeaways:"></a>4.Takeaways:</h2><p>1.在复杂接触密集型任务中，单纯将触觉信号加入观测空间未必能提升性能<br>2.低维触觉嵌入在评估过程中对凝胶损伤或更换导致的纹理变化展现出更强鲁棒性<br>3.纯视觉输入的DP常预测出偏差轨迹导致较大接触力（如图8(b)失效案例2），需人工干预防止传感器损坏；而触觉嵌入的DP虽很少产生大接触力，却易在接触物体时陷入停滞（如图8(a)失效案例2及图8(c)失效案例）。这可能是因为其从数据中学到了反应行为（如接触时微抬、失联时下压），但由于开环执行动作块，缺乏精细调整能力，导致在不同接触状态间快速切换<br>4.RDP适用于不同触觉&#x2F;力传感器，RDP能同时使用左右夹爪的不同触觉传感器（左MCTac&#x2F;右GelSight）保持优异表现<br>5.我们推测力传感器可能因其相较于光学触觉传感器具有更低延迟和更小维度而呈现更优效果，这或许降低了网络的学习难度。RDP能即时响应外部干扰<br>6.在剥离任务中相对轨迹预测的表现远优于绝对动作预测，这可能是因为相对轨迹更易于轻量化快速策略模型的学习由此从触觉反馈中带来了一个更具泛化能力的反应策略。此外，相对轨迹还压缩了潜在空间，促进了潜在扩散策略的学习过程。我们还发现，延迟匹配通过确保动作块之间的平滑过渡并减少分布外（OOD）行为，对策略性能提升贡献显著。<br>7.数据质量对于模型能力提升很重要<br>局限性：<br>1.虽然TactAR能在AR中提供一定程度的触觉&#x2F;力反馈，但其直观性和效率仍不及人手直接操作<br>2.TactAR系统专为二指夹爪设计<br>3.RDP算法中的快速策略目前仅能响应高频触觉&#x2F;力输入信号，尚无法快速处理高频图像输入<br>4.RDP算法目前仅适用于单任务场景<br>未来工作：<br>1.进一步降低传感器与系统延迟来提升远程操作效率<br>2.将该系统及RDP算法拓展至配备触觉传感器的灵巧手<br>3.考虑将高频视觉输入融入快速网络<br>4.可通过采用类似RDP的非对称分词器替换VLA分词器，将RDP与视觉-语言-动作模型结合，从而在VLA中引入具有实时触觉&#x2F;力反馈的闭环控制反应行为。</p><p>最后放上因为研一人工智能课读论文环节的PPT(我正好选的是这一篇)：</p><iframe src="/pdf/RDP.pdf" width="100%" height="600px"></iframe>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Reactive Diffusion Policy:  Slow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation&lt;/p&gt;
+&lt;h3 id=&quot;这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。&quot;&gt;&lt;a href=&quot;#这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。&quot;&gt;&lt;/a&gt;这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="readings" scheme="https://fanchenlex.github.io/categories/readings/"/>
+    
+    
+    <category term="paper reading" scheme="https://fanchenlex.github.io/tags/paper-reading/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RDP | RSS 2025 | Paper Reading</title>
+    <link href="https://fanchenlex.github.io/reandings/VLA-ADAPTER/"/>
+    <id>https://fanchenlex.github.io/reandings/VLA-ADAPTER/</id>
+    <published>2025-11-02T05:35:50.000Z</published>
+    <updated>2025-11-02T05:00:19.461Z</updated>
+    
+    <content type="html"><![CDATA[<p>Reactive Diffusion Policy:  Slow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation</p><h3 id="这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。"><a href="#这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。" class="headerlink" title="这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。"></a>这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。</h3><span id="more"></span><table style="width:100%; border-collapse:collapse;">  <thead style="border-bottom:1px solid #ccc;">    <tr>      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>      <th style="padding:8px; text-align:center;">技术路线</th>      <th style="padding:8px; text-align:center;">创新点</th>      <th style="padding:8px; text-align:center;">日期</th>    </tr>  </thead>  <tbody>    <tr>      <td style="padding:8px; text-align:center;">首次</td>      <td style="padding:8px; text-align:center;">快慢系统</td>      <td style="padding:8px; text-align:center;">双系统+力触觉的新思想</td>      <td style="padding:8px; text-align:center;">2025-10-04</td>    </tr>  </tbody></table><h2 id="1-What？"><a href="#1-What？" class="headerlink" title="1.What？"></a>1.What？</h2><p>提出TactAR（一种通过增强现实提供实时触觉反馈的低成本遥操作系统）<br>Reactive Diffusion Policy（RDP，一种新型慢快视觉触觉模仿学习算法）</p><h2 id="2-Why？"><a href="#2-Why？" class="headerlink" title="2.Why？"></a>2.Why？</h2><p>神经科学领域的一些研究成果表明，人类在执行接触密集型任务时，其过程可分为两个组成部分：1）前馈&#x2F;预测性动作；2）基于感官反馈（如触觉信号）的闭环微调。受此启发，我们致力于开发一种能模拟人类在执行复杂接触密集型任务时控制模式的机器人学习系统。</p><h2 id="3-How？"><a href="#3-How？" class="headerlink" title="3.How？"></a>3.How？</h2><p><img src="/img/RDP.png" alt="RDP Overview"><br>RDP采用双层架构：<br>（1）在低频下预测潜在空间中高层动作分块的慢速潜在扩散策略；<br>（2）在高频下实现闭环触觉反馈控制的快速非对称分词器<br>TactAR：Meta Quest3提供实时触觉&#x2F;力反馈<br>慢速网络（潜在扩散策略LDP）作为神经规划器，以低频（1-2Hz）在潜在空间预测高层动作块，类比预测性动作；快速网络（非对称分词器AT）作为可学习阻抗控制器，基于高频触觉反馈（20-30Hz）微调潜在动作块，类比闭环微调。该分层结构使慢速网络通过扩散模型和动作分块保持对复杂非马尔可夫动作的建模能力，而快速网络借助实时触觉反馈实现精确力控与快速响应的闭环控制。<br>首先通过训练非对称分词器将原始动作块编码至潜空间，其解码器将瞬时触觉表征与潜动作块分离作为输入；<br>非对称的含义是仅在解码器中将触觉表示作为输入。这种刻意设计的结构不对称性是为了确保潜在动作片段仅保留高层反馈策略，而精确位置则由解码器借助触觉信息进行预测。<br>策略学习阶段，慢速潜扩散策略(LDP)以类似扩散策略的方式根据观测数据预测潜动作块；<br>下采样后的潜在表示降低了计算成本；<br>AT中的不对称设计可将具有挑战性的反应行为排除在潜在动作片段之外，从而降低潜在扩散策略在低频观测下的学习难度并增强其泛化能力<br>推理阶段低频采样潜动作块，在每个块内执行动作时，最新触觉表征实时输入AT解码器以预测下一帧实际动作<br>采用相对末端执行器轨迹进行动作表征：不直接计算连续帧间的增量动作（可能导致较大累积误差），而是通过计算相对于基准坐标系的相对变换，将绝对位姿轨迹转换为相对轨迹。<br>我们计算策略推理与动作执行产生的延迟，并舍弃模型预测的前几个动作步，以向机器人发送精确匹配的动作</p><h2 id="4-Takeaways"><a href="#4-Takeaways" class="headerlink" title="4.Takeaways:"></a>4.Takeaways:</h2><p>1.在复杂接触密集型任务中，单纯将触觉信号加入观测空间未必能提升性能<br>2.低维触觉嵌入在评估过程中对凝胶损伤或更换导致的纹理变化展现出更强鲁棒性<br>3.纯视觉输入的DP常预测出偏差轨迹导致较大接触力（如图8(b)失效案例2），需人工干预防止传感器损坏；而触觉嵌入的DP虽很少产生大接触力，却易在接触物体时陷入停滞（如图8(a)失效案例2及图8(c)失效案例）。这可能是因为其从数据中学到了反应行为（如接触时微抬、失联时下压），但由于开环执行动作块，缺乏精细调整能力，导致在不同接触状态间快速切换<br>4.RDP适用于不同触觉&#x2F;力传感器，RDP能同时使用左右夹爪的不同触觉传感器（左MCTac&#x2F;右GelSight）保持优异表现<br>5.我们推测力传感器可能因其相较于光学触觉传感器具有更低延迟和更小维度而呈现更优效果，这或许降低了网络的学习难度。RDP能即时响应外部干扰<br>6.在剥离任务中相对轨迹预测的表现远优于绝对动作预测，这可能是因为相对轨迹更易于轻量化快速策略模型的学习由此从触觉反馈中带来了一个更具泛化能力的反应策略。此外，相对轨迹还压缩了潜在空间，促进了潜在扩散策略的学习过程。我们还发现，延迟匹配通过确保动作块之间的平滑过渡并减少分布外（OOD）行为，对策略性能提升贡献显著。<br>7.数据质量对于模型能力提升很重要<br>局限性：<br>1.虽然TactAR能在AR中提供一定程度的触觉&#x2F;力反馈，但其直观性和效率仍不及人手直接操作<br>2.TactAR系统专为二指夹爪设计<br>3.RDP算法中的快速策略目前仅能响应高频触觉&#x2F;力输入信号，尚无法快速处理高频图像输入<br>4.RDP算法目前仅适用于单任务场景<br>未来工作：<br>1.进一步降低传感器与系统延迟来提升远程操作效率<br>2.将该系统及RDP算法拓展至配备触觉传感器的灵巧手<br>3.考虑将高频视觉输入融入快速网络<br>4.可通过采用类似RDP的非对称分词器替换VLA分词器，将RDP与视觉-语言-动作模型结合，从而在VLA中引入具有实时触觉&#x2F;力反馈的闭环控制反应行为。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Reactive Diffusion Policy:  Slow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation&lt;/p&gt;
+&lt;h3 id=&quot;这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。&quot;&gt;&lt;a href=&quot;#这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。&quot;&gt;&lt;/a&gt;这篇文章通过软件与硬件两套设计实现了模型面对需要精细操作任务时的快速相应能力，其中的motivation很有意义。&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="readings" scheme="https://fanchenlex.github.io/categories/readings/"/>
+    
+    
+    <category term="paper reading" scheme="https://fanchenlex.github.io/tags/paper-reading/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RoboTwin 2.0 | arxiv 2025.8.27(preprint) | Paper Reading</title>
+    <link href="https://fanchenlex.github.io/reandings/RoboTwin2.0/"/>
+    <id>https://fanchenlex.github.io/reandings/RoboTwin2.0/</id>
+    <published>2025-11-02T05:05:50.000Z</published>
+    <updated>2025-11-02T03:50:46.249Z</updated>
+    
+    <content type="html"><![CDATA[<p>RoboTwin 2.0: A Scalable Data Generator and Benchmark with Strong Domain Randomization for Robust Bimanual Robotic Manipulation</p><h3 id="这篇文章将Diffusion应用到3D空间。是在diffusion-policy基础上进一步提升了策略的能力。"><a href="#这篇文章将Diffusion应用到3D空间。是在diffusion-policy基础上进一步提升了策略的能力。" class="headerlink" title="这篇文章将Diffusion应用到3D空间。是在diffusion policy基础上进一步提升了策略的能力。"></a>这篇文章将Diffusion应用到3D空间。是在diffusion policy基础上进一步提升了策略的能力。</h3><span id="more"></span><table style="width:100%; border-collapse:collapse;">  <thead style="border-bottom:1px solid #ccc;">    <tr>      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>      <th style="padding:8px; text-align:center;">技术路线</th>      <th style="padding:8px; text-align:center;">创新点</th>      <th style="padding:8px; text-align:center;">日期</th>    </tr>  </thead>  <tbody>    <tr>      <td style="padding:8px; text-align:center;">改进</td>      <td style="padding:8px; text-align:center;">simulation data collection</td>      <td style="padding:8px; text-align:center;">自动化仿真数据生成pipline的改进引入多模态反馈代码生成</td>      <td style="padding:8px; text-align:center;">2025-10-03</td>    </tr>  </tbody></table><h2 id="1-What？"><a href="#1-What？" class="headerlink" title="1.What？"></a>1.What？</h2><p>一个高效自动化采集无穷的高质量数据的框架</p><h2 id="2-Why？"><a href="#2-Why？" class="headerlink" title="2.Why？"></a>2.Why？</h2><p>缺少高质量训练数据；采集强度大难以规模化；仿真做自动化数据生成较困难；数据不够多样</p><h2 id="3-How？"><a href="#3-How？" class="headerlink" title="3.How？"></a>3.How？</h2><p><img src="/img/expertcodegen.png" alt="Expert code generation pipeline"><br>在1.0基础上增加了：<br>升级了API库，对代码进行了优化，提升了代码的可读性<br>覆盖了更多的技能<br>LLM生成部分增加了视觉反馈<br>在原来的点轴系统上设计了不同的语义轴支持抓取时使用不同的姿势<br>场景由单一白色变为不同的背景材质<br>增加了光照桌子高度的变化<br>轨迹上多语言指令<br>背景增加了其他物体</p><h2 id="4-Takeaways"><a href="#4-Takeaways" class="headerlink" title="4.Takeaways:"></a>4.Takeaways:</h2><p>1.在低自由度的机械臂上有明显涨点，在高自由度的机械臂上基本不变<br>  因为加入的随机抖动对高自由度的来说没有什么帮助，而低自由度的解空间相对比较小，加入后有利于涨点，因为扩大了解空间<br>2.跨域泛化可以通过很好的预训练做到，在新场景中可以只提供干净的场景就可以泛化</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;RoboTwin 2.0: A Scalable Data Generator and Benchmark with Strong Domain Randomization for Robust Bimanual Robotic Manipulation&lt;/p&gt;
+&lt;h3 id=&quot;这篇文章将Diffusion应用到3D空间。是在diffusion-policy基础上进一步提升了策略的能力。&quot;&gt;&lt;a href=&quot;#这篇文章将Diffusion应用到3D空间。是在diffusion-policy基础上进一步提升了策略的能力。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章将Diffusion应用到3D空间。是在diffusion policy基础上进一步提升了策略的能力。&quot;&gt;&lt;/a&gt;这篇文章将Diffusion应用到3D空间。是在diffusion policy基础上进一步提升了策略的能力。&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="readings" scheme="https://fanchenlex.github.io/categories/readings/"/>
+    
+    
+    <category term="paper reading" scheme="https://fanchenlex.github.io/tags/paper-reading/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RoboTwin1.0 | CVPR 2025 | Paper Reading</title>
+    <link href="https://fanchenlex.github.io/reandings/RoboTwin1.0/"/>
+    <id>https://fanchenlex.github.io/reandings/RoboTwin1.0/</id>
+    <published>2025-11-02T03:26:20.000Z</published>
+    <updated>2025-11-02T03:40:46.178Z</updated>
+    
+    <content type="html"><![CDATA[<p>RoboTwin: Dual-Arm Robot Benchmark with Generative Digital Twins</p><h3 id="这篇文章主要是为了解决仿真数据生成问题，希望能生成大规模高质量的仿真数据并推动现实世界的机器人操作发展。"><a href="#这篇文章主要是为了解决仿真数据生成问题，希望能生成大规模高质量的仿真数据并推动现实世界的机器人操作发展。" class="headerlink" title="这篇文章主要是为了解决仿真数据生成问题，希望能生成大规模高质量的仿真数据并推动现实世界的机器人操作发展。"></a>这篇文章主要是为了解决仿真数据生成问题，希望能生成大规模高质量的仿真数据并推动现实世界的机器人操作发展。</h3><span id="more"></span><table style="width:100%; border-collapse:collapse;">  <thead style="border-bottom:1px solid #ccc;">    <tr>      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>      <th style="padding:8px; text-align:center;">技术路线</th>      <th style="padding:8px; text-align:center;">创新点</th>      <th style="padding:8px; text-align:center;">日期</th>    </tr>  </thead>  <tbody>    <tr>      <td style="padding:8px; text-align:center;">首次</td>      <td style="padding:8px; text-align:center;">simulation data collection</td>      <td style="padding:8px; text-align:center;">自动化仿真数据生成pipline</td>      <td style="padding:8px; text-align:center;">2025-10-03</td>    </tr>  </tbody></table><h2 id="1-What？"><a href="#1-What？" class="headerlink" title="1.What？"></a>1.What？</h2><p>一个针对双臂机器人操作的自动化仿真数据集生成</p><h2 id="2-Why？"><a href="#2-Why？" class="headerlink" title="2.Why？"></a>2.Why？</h2><p>目前具身的仿真环境不够好，仿真和现实世界的GAP太大，仿真数据生成不够自动化，无法起到推动现实世界的作用</p><h2 id="3-How？"><a href="#3-How？" class="headerlink" title="3.How？"></a>3.How？</h2><p><img src="/img/robotwin.png" alt="Data collection Pipeline"></p><ol><li>借助Rodin来实现2D图像-&gt;3D仿真模型，生成了很多3D模型</li><li>设计了一套点轴系统用于推测抓取的一些pose</li><li>作者设计了一套Prompt来引导大模型生成任务的执行代码<br>仿真预训练之后迁移到现实世界</li></ol><h2 id="4-Takeaways"><a href="#4-Takeaways" class="headerlink" title="4.Takeaways:"></a>4.Takeaways:</h2><p>1.二维深度学习(2D DP)在少量样本上性能有限，但随着数据量的增加显著提升<br>2.尽管存在扩展限制，DP3仍展现出强大的少样本能力<br>3.相机视野(FOV)对基于图像的输入任务成功率有显著影响，特别是在块处理任务中，较宽的角度可能会影响抓取评估的准确性。<br>4.双臂性能:<br>对称任务的成功率高(例如，两只手臂同时抓取瓶子)<br>对于不对称任务的成功率较低，特别是那些需要主动碰撞避免的臂之间任务。干<br>局限性：<br>目前只是2指夹爪<br>未来工作：<br>增加更多的模态(触觉等)<br>设计更多的双臂操作任务为benchmark<br>设计更高自由度的机器人末端执行器去设计专家数据的采集方案</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;RoboTwin: Dual-Arm Robot Benchmark with Generative Digital Twins&lt;/p&gt;
+&lt;h3 id=&quot;这篇文章主要是为了解决仿真数据生成问题，希望能生成大规模高质量的仿真数据并推动现实世界的机器人操作发展。&quot;&gt;&lt;a href=&quot;#这篇文章主要是为了解决仿真数据生成问题，希望能生成大规模高质量的仿真数据并推动现实世界的机器人操作发展。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章主要是为了解决仿真数据生成问题，希望能生成大规模高质量的仿真数据并推动现实世界的机器人操作发展。&quot;&gt;&lt;/a&gt;这篇文章主要是为了解决仿真数据生成问题，希望能生成大规模高质量的仿真数据并推动现实世界的机器人操作发展。&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="readings" scheme="https://fanchenlex.github.io/categories/readings/"/>
+    
+    
+    <category term="paper reading" scheme="https://fanchenlex.github.io/tags/paper-reading/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>3D Diffusion Policy | RSS 2024(oral) | Paper Reading</title>
+    <link href="https://fanchenlex.github.io/reandings/DP3/"/>
+    <id>https://fanchenlex.github.io/reandings/DP3/</id>
+    <published>2025-10-24T05:15:22.000Z</published>
+    <updated>2025-11-02T03:39:48.552Z</updated>
+    
+    <content type="html"><![CDATA[<p>3D Diffusion Policy:  Generalizable Visuomotor Policy Learning via Simple 3D Representations</p><h3 id="这篇文章将Diffusion应用到3D空间。是在diffusion-policy基础上进一步提升了策略的能力。"><a href="#这篇文章将Diffusion应用到3D空间。是在diffusion-policy基础上进一步提升了策略的能力。" class="headerlink" title="这篇文章将Diffusion应用到3D空间。是在diffusion policy基础上进一步提升了策略的能力。"></a>这篇文章将Diffusion应用到3D空间。是在diffusion policy基础上进一步提升了策略的能力。</h3><span id="more"></span><table style="width:100%; border-collapse:collapse;">  <thead style="border-bottom:1px solid #ccc;">    <tr>      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>      <th style="padding:8px; text-align:center;">技术路线</th>      <th style="padding:8px; text-align:center;">创新点</th>      <th style="padding:8px; text-align:center;">日期</th>    </tr>  </thead>  <tbody>    <tr>      <td style="padding:8px; text-align:center;">改进</td>      <td style="padding:8px; text-align:center;">Diffusion Policy</td>      <td style="padding:8px; text-align:center;">将Diffusion Policy扩展到3D空间</td>      <td style="padding:8px; text-align:center;">2025-10-02</td>    </tr>  </tbody></table><h2 id="1-What？"><a href="#1-What？" class="headerlink" title="1.What？"></a>1.What？</h2><p>DP3 &#x3D; DP+3D<br>一个模拟基准( 7 个领域的 72 个不同机器人任务，以及 4 个真实世界任务，包括在可变形物体上进行具有挑战性的灵巧操作)<br>优势：<br>更高的准确性，更少的演示数量和训练轮数<br>泛化至空间、视角、实例和外观等多个方面<br>安全 在实际任务中很少发出不稳定的指令</p><h2 id="2-Why？"><a href="#2-Why？" class="headerlink" title="2.Why？"></a>2.Why？</h2><p>以往仅用3D进行控制的方法推理速度太慢，使用预测和规划的方式低维中有成效但不适合高维控制</p><h2 id="3-How？"><a href="#3-How？" class="headerlink" title="3.How？"></a>3.How？</h2><p><img src="/img/DP3.png" alt="Overview of 3D Diffusion Policy (DP3)"><br>Perception:Encoder: MLP x 3 + maxpooling + Linear + LN （Single viewed）<br>Decision：Decoder: 条件去噪扩散模型 CDDPM<br>  裁剪点云有助于大幅提高精度<br>  加入LayerNorm层有助于稳定不同任务的训练<br>  DP3编码器中的投影头通过将特征投影到较低维度来加速推理，而不会影响精度<br>  去除颜色通道确保了鲁棒的外观泛化<br>  在低维控制任务中，DPM-solver++ 作为噪声采样器与DDIM相比具有竞争力，而DPM-solver++难以很好地处理高维控制任务</p><h2 id="4-Takeaways"><a href="#4-Takeaways" class="headerlink" title="4.Takeaways:"></a>4.Takeaways:</h2><p>简单的点云表示优于其他复杂的三维表示，也更适合扩散策略而非其他策略骨干</p><p>局限性与未来工作：<br>用于控制的最佳 3D 表示仍有待发现<br>这项工作没有深入研究具有极长视野的任务，这有待于未来的探索。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;3D Diffusion Policy:  Generalizable Visuomotor Policy Learning via Simple 3D Representations&lt;/p&gt;
+&lt;h3 id=&quot;这篇文章将Diffusion应用到3D空间。是在diffusion-policy基础上进一步提升了策略的能力。&quot;&gt;&lt;a href=&quot;#这篇文章将Diffusion应用到3D空间。是在diffusion-policy基础上进一步提升了策略的能力。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章将Diffusion应用到3D空间。是在diffusion policy基础上进一步提升了策略的能力。&quot;&gt;&lt;/a&gt;这篇文章将Diffusion应用到3D空间。是在diffusion policy基础上进一步提升了策略的能力。&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="readings" scheme="https://fanchenlex.github.io/categories/readings/"/>
+    
+    
+    <category term="paper reading" scheme="https://fanchenlex.github.io/tags/paper-reading/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Diffusion Policy | RSS 2023 | Paper Reading</title>
+    <link href="https://fanchenlex.github.io/reandings/DP/"/>
+    <id>https://fanchenlex.github.io/reandings/DP/</id>
+    <published>2025-10-19T03:05:20.000Z</published>
+    <updated>2025-11-02T03:39:56.810Z</updated>
+    
+    <content type="html"><![CDATA[<p>Diffusion Policy: Visuomotor Policy Learning via Action Diffusion</p><h3 id="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。"><a href="#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。" class="headerlink" title="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。"></a>这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。</h3><span id="more"></span><table style="width:100%; border-collapse:collapse;">  <thead style="border-bottom:1px solid #ccc;">    <tr>      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>      <th style="padding:8px; text-align:center;">技术路线</th>      <th style="padding:8px; text-align:center;">创新点</th>      <th style="padding:8px; text-align:center;">日期</th>    </tr>  </thead>  <tbody>    <tr>      <td style="padding:8px; text-align:center;">首次</td>      <td style="padding:8px; text-align:center;">Diffusion Policy</td>      <td style="padding:8px; text-align:center;">将Diffusion用到了robotics中</td>      <td style="padding:8px; text-align:center;">2025-10-02</td>    </tr>  </tbody></table><h2 id="1-What？"><a href="#1-What？" class="headerlink" title="1.What？"></a>1.What？</h2><p>将视觉运动策略表示为条件去噪扩散模型，称为扩散策略<br>在机器人动作空间上进行条件去噪扩散过程，根据视觉观测推断动作-评分梯度<br>策略内包含：后退水平控制、视觉条件约束以及时间序列扩散Transformer三种机制，来具体实现模型</p><h2 id="2-Why？"><a href="#2-Why？" class="headerlink" title="2.Why？"></a>2.Why？</h2><p>之前的工作采用高斯混合模型、量化动作的类别表示、通过转换策略表示形式——从显式转为隐式以更好地捕捉多模态分布<br>作者希望将图像领域的扩散模型用到机器人领域，原来生成图像，现在生成动作</p><h2 id="3-How？"><a href="#3-How？" class="headerlink" title="3.How？"></a>3.How？</h2><p><img src="/img/DPmodel.png" alt="Diffusion Policy Overview"><br>ResNet-18(前端抽取图像特征) + CNN-based&#x2F;Transformer-based 模型训练学习不同程度noise加入action的输入输出为原先的groudtruth action学习到这种能力(MSE更新学习FiLM输出的参数以及其他网络参数)后进行推理，输入一个Obs，模型经过k步迭代最后得到预测的下一个Action机器人执行后获得新的Obs，如此反复直到完成任务</p><h2 id="4-Takeaways"><a href="#4-Takeaways" class="headerlink" title="4.Takeaways:"></a>4.Takeaways:</h2><p>归一化处理对于扩散策略获得最佳性能很重要<br>旋转表征：6D旋转表征<br>图像增强：随机裁剪<br>基于CNN的DP优于基于Transformer的DP结构<br>局限性与未来工作：<br>行为克隆的固有局限，如演示数据不足时性能欠佳。扩散策略可应用于强化学习等其他范式，以利用次优和负面数据。<br>相较于LSTM-GMM等简单方法，扩散策略具有更高计算成本与推理延迟。我们的动作序列预测方法部分缓解了该问题，但可能无法满足高频率控制任务需求。<br>未来工作可借助扩散模型加速技术的最新进展来减少所需推理步数。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Diffusion Policy: Visuomotor Policy Learning via Action Diffusion&lt;/p&gt;
+&lt;h3 id=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot;&gt;&lt;a href=&quot;#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&quot;&gt;&lt;/a&gt;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="readings" scheme="https://fanchenlex.github.io/categories/readings/"/>
+    
+    
+    <category term="paper reading" scheme="https://fanchenlex.github.io/tags/paper-reading/"/>
+    
+  </entry>
   
   <entry>
     <title>Southeast University Opening Ceremony</title>
@@ -303,50 +435,6 @@
   </entry>
   
   <entry>
-    <title>Diffusion Policy | RSS 2023 | Paper Reading</title>
-    <link href="https://fanchenlex.github.io/reandings/DP/"/>
-    <id>https://fanchenlex.github.io/reandings/DP/</id>
-    <published>2025-06-19T03:05:20.000Z</published>
-    <updated>2025-10-28T13:57:57.293Z</updated>
-    
-    <content type="html"><![CDATA[<p>Diffusion Policy: Visuomotor Policy Learning via Action Diffusion</p><h3 id="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。"><a href="#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。" class="headerlink" title="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。"></a>这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。</h3><span id="more"></span><table style="width:100%; border-collapse:collapse;">  <thead style="border-bottom:1px solid #ccc;">    <tr>      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>      <th style="padding:8px; text-align:center;">技术路线</th>      <th style="padding:8px; text-align:center;">创新点</th>      <th style="padding:8px; text-align:center;">日期</th>    </tr>  </thead>  <tbody>    <tr>      <td style="padding:8px; text-align:center;">首次</td>      <td style="padding:8px; text-align:center;">Diffusion Policy</td>      <td style="padding:8px; text-align:center;">将Diffusion用到了robotics中</td>      <td style="padding:8px; text-align:center;">2025-10-28</td>    </tr>  </tbody></table><h2 id="1-What？"><a href="#1-What？" class="headerlink" title="1.What？"></a>1.What？</h2><p>将视觉运动策略表示为条件去噪扩散模型，称为扩散策略<br>在机器人动作空间上进行条件去噪扩散过程，根据视觉观测推断动作-评分梯度<br>策略内包含：后退水平控制、视觉条件约束以及时间序列扩散Transformer三种机制，来具体实现模型</p><h2 id="2-Why？"><a href="#2-Why？" class="headerlink" title="2.Why？"></a>2.Why？</h2><p>之前的工作采用高斯混合模型、量化动作的类别表示、通过转换策略表示形式——从显式转为隐式以更好地捕捉多模态分布<br>作者希望将图像领域的扩散模型用到机器人领域，原来生成图像，现在生成动作</p><h2 id="3-How？"><a href="#3-How？" class="headerlink" title="3.How？"></a>3.How？</h2><p><img src="/img/DPmodel.png" alt="Diffusion Policy Overview"><br>ResNet-18(前端抽取图像特征) + CNN-based&#x2F;Transformer-based 模型训练学习不同程度noise加入action的输入输出为原先的groudtruth action学习到这种能力(MSE更新学习FiLM输出的参数以及其他网络参数)后进行推理，输入一个Obs，模型经过k步迭代最后得到预测的下一个Action机器人执行后获得新的Obs，如此反复直到完成任务</p><h2 id="4-Takeaways"><a href="#4-Takeaways" class="headerlink" title="4.Takeaways:"></a>4.Takeaways:</h2><p>归一化处理对于扩散策略获得最佳性能很重要<br>旋转表征：6D旋转表征<br>图像增强：随机裁剪<br>基于CNN的DP优于基于Transformer的DP结构<br>局限性与未来工作：<br>行为克隆的固有局限，如演示数据不足时性能欠佳。扩散策略可应用于强化学习等其他范式，以利用次优和负面数据。<br>相较于LSTM-GMM等简单方法，扩散策略具有更高计算成本与推理延迟。我们的动作序列预测方法部分缓解了该问题，但可能无法满足高频率控制任务需求。<br>未来工作可借助扩散模型加速技术的最新进展来减少所需推理步数。</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;Diffusion Policy: Visuomotor Policy Learning via Action Diffusion&lt;/p&gt;
-&lt;h3 id=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot;&gt;&lt;a href=&quot;#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&quot;&gt;&lt;/a&gt;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&lt;/h3&gt;</summary>
-    
-    
-    
-    <category term="readings" scheme="https://fanchenlex.github.io/categories/readings/"/>
-    
-    
-    <category term="paper reading" scheme="https://fanchenlex.github.io/tags/paper-reading/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>3D Diffusion Policy | RSS 2024(oral) | Paper Reading</title>
-    <link href="https://fanchenlex.github.io/reandings/DP3/"/>
-    <id>https://fanchenlex.github.io/reandings/DP3/</id>
-    <published>2025-06-19T03:05:20.000Z</published>
-    <updated>2025-10-28T13:57:05.165Z</updated>
-    
-    <content type="html"><![CDATA[<p>3D Diffusion Policy:  Generalizable Visuomotor Policy Learning via Simple 3D Representations</p><h3 id="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。"><a href="#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。" class="headerlink" title="这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。"></a>这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。</h3><span id="more"></span><table style="width:100%; border-collapse:collapse;">  <thead style="border-bottom:1px solid #ccc;">    <tr>      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>      <th style="padding:8px; text-align:center;">技术路线</th>      <th style="padding:8px; text-align:center;">创新点</th>      <th style="padding:8px; text-align:center;">日期</th>    </tr>  </thead>  <tbody>    <tr>      <td style="padding:8px; text-align:center;">首次</td>      <td style="padding:8px; text-align:center;">Diffusion Policy</td>      <td style="padding:8px; text-align:center;">将Diffusion用到了robotics中</td>      <td style="padding:8px; text-align:center;">2025-10-28</td>    </tr>  </tbody></table><h2 id="1-What？"><a href="#1-What？" class="headerlink" title="1.What？"></a>1.What？</h2><p>将视觉运动策略表示为条件去噪扩散模型，称为扩散策略<br>在机器人动作空间上进行条件去噪扩散过程，根据视觉观测推断动作-评分梯度<br>策略内包含：后退水平控制、视觉条件约束以及时间序列扩散Transformer三种机制，来具体实现模型</p><h2 id="2-Why？"><a href="#2-Why？" class="headerlink" title="2.Why？"></a>2.Why？</h2><p>之前的工作采用高斯混合模型、量化动作的类别表示、通过转换策略表示形式——从显式转为隐式以更好地捕捉多模态分布<br>作者希望将图像领域的扩散模型用到机器人领域，原来生成图像，现在生成动作</p><h2 id="3-How？"><a href="#3-How？" class="headerlink" title="3.How？"></a>3.How？</h2><p><img src="/img/DPmodel.png" alt="Diffusion Policy Overview"><br>ResNet-18(前端抽取图像特征) + CNN-based&#x2F;Transformer-based 模型训练学习不同程度noise加入action的输入输出为原先的groudtruth action学习到这种能力(MSE更新学习FiLM输出的参数以及其他网络参数)后进行推理，输入一个Obs，模型经过k步迭代最后得到预测的下一个Action机器人执行后获得新的Obs，如此反复直到完成任务</p><h2 id="4-Takeaways"><a href="#4-Takeaways" class="headerlink" title="4.Takeaways:"></a>4.Takeaways:</h2><p>归一化处理对于扩散策略获得最佳性能很重要<br>旋转表征：6D旋转表征<br>图像增强：随机裁剪<br>基于CNN的DP优于基于Transformer的DP结构<br>局限性与未来工作：<br>行为克隆的固有局限，如演示数据不足时性能欠佳。扩散策略可应用于强化学习等其他范式，以利用次优和负面数据。<br>相较于LSTM-GMM等简单方法，扩散策略具有更高计算成本与推理延迟。我们的动作序列预测方法部分缓解了该问题，但可能无法满足高频率控制任务需求。<br>未来工作可借助扩散模型加速技术的最新进展来减少所需推理步数。</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;3D Diffusion Policy:  Generalizable Visuomotor Policy Learning via Simple 3D Representations&lt;/p&gt;
-&lt;h3 id=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot;&gt;&lt;a href=&quot;#这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion-policy。&quot; class=&quot;headerlink&quot; title=&quot;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&quot;&gt;&lt;/a&gt;这篇文章是将Diffusion应用到Robotics的开山之作，引出了很多衍生文章。很值得学习和阅读去了解diffusion policy。&lt;/h3&gt;</summary>
-    
-    
-    
-    <category term="readings" scheme="https://fanchenlex.github.io/categories/readings/"/>
-    
-    
-    <category term="paper reading" scheme="https://fanchenlex.github.io/tags/paper-reading/"/>
-    
-  </entry>
-  
-  <entry>
     <title>new title</title>
     <link href="https://fanchenlex.github.io/courses/index/"/>
     <id>https://fanchenlex.github.io/courses/index/</id>
@@ -361,68 +449,6 @@
     
     
     <category term="collaboration" scheme="https://fanchenlex.github.io/categories/collaboration/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>new title</title>
-    <link href="https://fanchenlex.github.io/projects/index/"/>
-    <id>https://fanchenlex.github.io/projects/index/</id>
-    <published>2025-06-19T03:05:02.000Z</published>
-    <updated>2025-09-10T09:13:13.999Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="to-do"><a href="#to-do" class="headerlink" title="to do"></a>to do</h1><span id="more"></span>]]></content>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;to-do&quot;&gt;&lt;a href=&quot;#to-do&quot; class=&quot;headerlink&quot; title=&quot;to do&quot;&gt;&lt;/a&gt;to do&lt;/h1&gt;</summary>
-    
-    
-    
-    <category term="projects" scheme="https://fanchenlex.github.io/categories/projects/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>new title</title>
-    <link href="https://fanchenlex.github.io/blogs/index/"/>
-    <id>https://fanchenlex.github.io/blogs/index/</id>
-    <published>2025-06-19T03:03:37.000Z</published>
-    <updated>2025-09-10T09:13:20.027Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Hello-world"><a href="#Hello-world" class="headerlink" title="Hello world"></a>Hello world</h1><span id="more"></span>]]></content>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;Hello-world&quot;&gt;&lt;a href=&quot;#Hello-world&quot; class=&quot;headerlink&quot; title=&quot;Hello world&quot;&gt;&lt;/a&gt;Hello world&lt;/h1&gt;</summary>
-    
-    
-    
-    <category term="blogs" scheme="https://fanchenlex.github.io/categories/blogs/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>🏅 Outstanding Class Honor</title>
-    <link href="https://fanchenlex.github.io/awards/OutstandingClass/"/>
-    <id>https://fanchenlex.github.io/awards/OutstandingClass/</id>
-    <published>2023-11-01T00:00:00.000Z</published>
-    <updated>2025-09-21T02:32:51.819Z</updated>
-    
-    <content type="html"><![CDATA[<ul><li><strong>Institution:</strong> Xidian University  </li><li><strong>Date:</strong> November, 2023  </li><li><strong>Honor:</strong> Outstanding Class (on behalf of Class 2103014)  </li><li><strong>Ranking:</strong> Top 5%  </li><li><strong>Prize:</strong> ¥1,000  <span id="more"></span>As the class and college representative, I accepted the university-level “Outstanding Class” award on behalf of my class.<br><img src="/img/2103014%E7%8F%AD%E7%BA%A7%E5%90%88%E7%85%A7.jpg" alt="Class photo"><br><img src="/img/%E5%85%88%E8%BF%9B%E7%8F%AD%E7%BA%A7%E7%AD%94%E8%BE%A9.png" alt="Defense scene"><br><img src="/img/%E5%85%88%E8%BF%9B%E7%8F%AD%E7%BA%A7.jpg" alt="Outstanding Class Honor"></li></ul>]]></content>
-    
-    
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Institution:&lt;/strong&gt; Xidian University  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; November, 2023  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Honor:&lt;/strong&gt; Outstanding Class (on behalf of Class 2103014)  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Ranking:&lt;/strong&gt; Top 5%  &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Prize:&lt;/strong&gt; ¥1,000</summary>
-    
-    
-    
-    <category term="Awards" scheme="https://fanchenlex.github.io/categories/Awards/"/>
     
     
   </entry>
