@@ -11836,3 +11836,12 @@ body {
     width: 100%;
   }
 }
+.a2a_kit {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center;
+  width: 100%;
+}
+.a2a_kit a {
+  margin: 0 6px;
+}
