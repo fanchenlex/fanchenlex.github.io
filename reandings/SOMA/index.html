@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>SOMA | arxiv 2026.03.25 | Paper Reading - Zhuo&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Zhuo&#039;s Blog"><meta name="msapplication-TileImage" content="/img/logo.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Zhuo&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="SOMA: Strategic Orchestration and Memory-Augmented System for  Vision-Language-Action Model Robustness via In-Context Adaptation SOMA通过升级冻结的VLA策略实现无需参数微调的鲁棒上下文适应。具体而言，SOMA不微调VLA主干的前提下通过在线流程运行，包括对比式双记忆"><meta property="og:type" content="blog"><meta property="og:title" content="SOMA | arxiv 2026.03.25 | Paper Reading"><meta property="og:url" content="https://fanchenlex.github.io/reandings/SOMA/"><meta property="og:site_name" content="Zhuo&#039;s Blog"><meta property="og:description" content="SOMA: Strategic Orchestration and Memory-Augmented System for  Vision-Language-Action Model Robustness via In-Context Adaptation SOMA通过升级冻结的VLA策略实现无需参数微调的鲁棒上下文适应。具体而言，SOMA不微调VLA主干的前提下通过在线流程运行，包括对比式双记忆"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://fanchenlex.github.io/img/soma.png"><meta property="article:published_time" content="2026-03-28T11:28:42.000Z"><meta property="article:modified_time" content="2026-04-03T04:30:51.375Z"><meta property="article:author" content="Wenzhuo Li"><meta property="article:tag" content="paper reading"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://fanchenlex.github.io/img/soma.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://fanchenlex.github.io/reandings/SOMA/"},"headline":"SOMA | arxiv 2026.03.25 | Paper Reading","image":["https://fanchenlex.github.io/img/soma.png"],"datePublished":"2026-03-28T11:28:42.000Z","dateModified":"2026-04-03T04:30:51.375Z","author":{"@type":"Person","name":"Wenzhuo Li"},"publisher":{"@type":"Organization","name":"Zhuo's Blog","logo":{"@type":"ImageObject","url":"https://fanchenlex.github.io/img/logo.png"}},"description":"SOMA: Strategic Orchestration and Memory-Augmented System for  Vision-Language-Action Model Robustness via In-Context Adaptation SOMA通过升级冻结的VLA策略实现无需参数微调的鲁棒上下文适应。具体而言，SOMA不微调VLA主干的前提下通过在线流程运行，包括对比式双记忆"}</script><link rel="canonical" href="https://fanchenlex.github.io/reandings/SOMA/"><link rel="icon" href="/img/logo.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Zhuo's Blog" type="application/atom+xml">
+</head><body class="is-3-column"><canvas id="universe"></canvas><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Zhuo&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories/blogs">Blogs</a><a class="navbar-item" href="/publications">Publications</a><a class="navbar-item" href="/categories/projects">Projects</a><a class="navbar-item" href="/categories/courses">Courses</a><a class="navbar-item" href="/gallery">Gallery</a><a class="navbar-item" href="/categories/readings">Readings</a><a class="navbar-item" href="/categories/diary">Diary</a><a class="navbar-item" href="/archives">archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/fanchenlex"><i class="fab fa-github"></i></a><a class="navbar-item night" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/img/soma.png" alt="SOMA | arxiv 2026.03.25 | Paper Reading"></span></div><article class="card-content article" role="article"><h1 class="title is-3 is-size-4-mobile">SOMA | arxiv 2026.03.25 | Paper Reading</h1><div class="article-meta is-size-7 is-uppercase level is-mobile mt-2"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2026-03-28T11:28:42.000Z" title="2026/3/28 19:28:42">2026-03-28</time></span><span class="level-item">Updated&nbsp;<time dateTime="2026-04-03T04:30:51.375Z" title="2026/4/3 12:30:51">2026-04-03</time></span><span class="level-item"><a class="link-muted" href="/categories/readings/">readings</a></span><span class="level-item">20 minutes read (About 3020 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><div class="content"><p>SOMA: Strategic Orchestration and Memory-Augmented System for  Vision-Language-Action Model Robustness via In-Context Adaptation</p>
+<h3 id="SOMA通过升级冻结的VLA策略实现无需参数微调的鲁棒上下文适应。具体而言，SOMA不微调VLA主干的前提下通过在线流程运行，包括对比式双记忆检索增强生成（RAG）、归因驱动的大型语言模型（LLM）编排器以及可扩展的模型上下文协议（MCP）干预，同时离线记忆巩固模块持续将执行轨迹提炼为可靠先验知识。实现异步离线记忆整合，持续精炼历史经验。">SOMA通过升级冻结的VLA策略实现无需参数微调的鲁棒上下文适应。具体而言，SOMA不微调VLA主干的前提下通过在线流程运行，包括对比式双记忆检索增强生成（RAG）、归因驱动的大型语言模型（LLM）编排器以及可扩展的模型上下文协议（MCP）干预，同时离线记忆巩固模块持续将执行轨迹提炼为可靠先验知识。实现异步离线记忆整合，持续精炼历史经验。</h3>
+<span id="more"></span>
+<table style="width:100%; border-collapse:collapse;">
+  <thead style="border-bottom:1px solid #ccc;">
+    <tr>
+      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>
+      <th style="padding:8px; text-align:center;">技术路线</th>
+      <th style="padding:8px; text-align:center;">创新点</th>
+      <th style="padding:8px; text-align:center;">日期</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px; text-align:center;">改进</td>
+      <td style="padding:8px; text-align:center;">Memory VLA</td>
+      <td style="padding:8px; text-align:center;">Memory Architecture</td>
+      <td style="padding:8px; text-align:center;">2026-03-25</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="1-What？">1.What？</h2>
+<p>SOMA是目前少有的无需微调即可为冻结VLA注入长期记忆的框架，模块化即插即用设计对工业部署极友好，双记忆对比架构打破了传统RAG&quot;只学成功&quot;的偏差，具有重要的方法论价值</p>
+<h2 id="2-Why？">2.Why？</h2>
+<p>在OOD任务中对抗感知噪声和环境变化的鲁棒性方面仍存在缺乏长期记忆、因果故障归因和动态干预能力而受到根本性限制</p>
+<p>一种方法是用RAG和上下文学习，尽管这些方法能有效利用外部记忆，但其仅关注成功轨迹而忽略了失败案例的诊断价值，这凸显了构建能同时利用成功与失败经验进行对比指导的双重记忆结构的必要性</p>
+<p>另一种方法利用LLM和VLM作为具备外部工具访问能力的高层规划器，但这些工作缺乏实现闭环适应所需的经验记忆与动态修正能力</p>
+<h2 id="3-How？">3.How？</h2>
+<p>SOMA框架包含在线执行工作流与离线记忆巩固工作流。</p>
+<p>a) 在线执行工作流：该在线工作流通过三个模块实现鲁棒的任务级适应：</p>
+<ol>
+<li>双记忆RAG：从双记忆库中同时检索历史成功指导与结构化失败警示，为决策提供任务相关的上下文基础。</li>
+<li>归因驱动的大语言模型编排器：通过归因引导的推理诊断执行障碍并生成针对性干预策略。</li>
+<li>MCP干预：通过<strong>可扩展工具接口执行编排策略</strong>，调节感知与语言输入以实现鲁棒的视觉语言行动推理。</li>
+</ol>
+<p>b) 离线记忆巩固工作流：作为在线执行的补充，离线工作流<strong>执行双阶段记忆巩固</strong>。它将新观测到的成功与失败轨迹提炼为结构化记忆，并更新双记忆库，从而在不更新参数的情况下实现持续改进。<br>
+<img src="/img/SOMAframework.png" alt="Architecture of MemER"><br>
+<strong>A. 双记忆RAG</strong></p>
+<p>对应图3中A部分，本模块实现了一个检索增强的双记忆库，为下游决策提供结构化历史上下文，将大语言模型的推理锚定于先前的成功与失败经验。与传统RAG系统不同，我们的记忆设计在两个互补维度上具有双重性：（1）<strong>明确分离成功与失败经验以实现对比归因；</strong>（2）每条经验在巩固阶段（见第三-D节）经历两阶段归因处理，从而持续优化存储信号。我们首先描述双记忆经验库的构建，再介绍基于其构建的检索机制。</p>
+<ol>
+<li>双记忆存储设计：我们构建了一个双分区记忆库：<br>
+M = Msucc ∪ Mfail, (1)<br>
+其中Msucc存储成功的干预轨迹作为正向指导，Mfail则归档失败尝试及结构化归因信号作为负向证据。这种显式分离支持有效策略与需规避模式之间的对比推理。该双分区设计具有实证依据：如第三-A节消融分析所示，仅使用成功或仅使用失败经验会导致不稳定或低效的干预规划，而同时保持两个分区可减少推理轮次与方差，提供更强的决策锚定。</li>
+</ol>
+<p>每条经验条目ei ∈ M以半结构化模式存储，包含固定核心模式与可扩展辅助字段：</p>
+<p>ei =(Ei, Ti, Si, Di, Vi, Oi, Ii ) (2)  Ei, Ti, Si, Di, Vi, Oi,为固定模式</p>
+<p>• Ei：任务实例的多模态嵌入；</p>
+<p>• Ti：自然语言任务描述；</p>
+<p>• Si ∈ {0, 1}：成功标识符；</p>
+<p>• Di：诊断标注（失败案例非空）；</p>
+<p>• Vi：执行视频的关键帧表示；</p>
+<p>• Oi：以对象-属性对构成的结构化场景；</p>
+<p>• Ii：可扩展的结构化元数据包。</p>
+<p>元数据包Ii提供灵活的工具执行模式，包含关键帧范围、成功最大步数、回滚等参数。随着工具或推理信号的发展可追加新字段，平衡模式稳定性与表征灵活性。</p>
+<p>2）基于相似度的检索策略：我们采用<strong>预训练的CLIP编码器</strong>[20] E(·,·)将当前任务上下文（初始观测ot与指令lt）投射至联合嵌入空间。检索过程形式化表示为：Ht = Top-k Sim E(ot, lt), {Ei | ei ∈ M}，(3)</p>
+<p>Ht包含成功范例与失败先例，为归因驱动推理提供正向引导与负向反事实参照。三元输入(Ht, ot, lt)为大语言模型编排器诊断差异并序列化干预工具提供了必要的基础支撑。</p>
+<p><strong>B. 归因驱动的大语言模型编排器</strong></p>
+<p>如图3B所示，大语言模型编排器模块构成SOMA的决策核心。我们采用<strong>Qwen3-VL-32B</strong>作为底层推理引擎，利用其先进的多模态理解与逻辑推理能力，通过模型控制协议诊断执行故障并编排干预措施。</p>
+<p>1）语义工具发现与意图对齐：大语言模型通过度量当前状态ot与检索原型Ht之间的能力差距来识别干预需求。给定语义工具描述{Di}N i=1，系统执行零样本匹配以选择候选工具集：T1:k = Match ∆g, {Di}N i=1，∆g = Gap(ot, Ht)，(4)</p>
+<p>筛选出功能与诊断故障原因相匹配的工具。</p>
+<ol start="2">
+<li>知识增强参数化：完成工具选择后，大语言模型从多模态上下文差异∆中推导出执行参数θi：θi = f(∆i | Ti)，∆i = Gap(ot, lt, Ht | Ti)，(5) 其中f表示工具特定值的映射函数。具体而言，∆刻画了当前观察ot与指令lt在视觉、语义及时间维度上相对于历史先验Ht的偏差。<br>
+最终输出为一组参数化干预措施：T∗ = {(T1, θ1), (T2, θ2), …, (Tk, θk)}，(6)</li>
+</ol>
+<p><img src="/img/toolspecific.png" alt="表I: 量化差异到各工具具体执行参数θi的映射关系"></p>
+<ol start="3">
+<li>干预链合成：随后，大语言模型将工具合成为有序的干预链：Φmcp = Orchestrate(T∗) = (T1, θ1) → (T2, θ2) → · · · → (Tk, θk)，(7)</li>
+</ol>
+<p>该编排遵循两条原则：</p>
+<ol>
+<li>感知优先：感知校正（如Paint-to-Action、Eraser）优先于物理恢复（如Encore），以避免因感知错误导致的重复失败。</li>
+<li>逻辑依赖：因果干扰消除在下游推理与执行之前实施。例如，在联合视觉偏移与执行停滞的情况下，大语言模型生成Paint-to-Action → Encore，使感知校正先于回滚操作。</li>
+</ol>
+<p><strong>C. MCP干预模块</strong><br>
+如图3C所示，该模块通过感知或物理动作执行干预链Φmcp。我们针对常见视觉语言智能体故障（如分布偏移与因果干扰）实例化了<strong>五种MCP工具</strong>，同时保持对新故障类型的即插即用扩展性。</p>
+<ol>
+<li>
+<p>绘画至行动：视觉域迁移：绘画至行动执行非参数化域适应：o′ t = 绘画至行动(ot, θdist)，(8) 具体实现通过视觉叠加与纹理替换完成。大型语言模型推导θdist，SAM3 分割目标区域，并通过高对比度掩码或来自成功轨迹（抓取成功）的纹理来缓解域偏移（图4）。<br>
+<img src="/img/VisualFocus.png" alt="Visual Focus"></p>
+</li>
+<li>
+<p>因果混淆消除器：通过参数θconf移除无关物体：o′t = Eraser(ot, θconf), (9)。该模块利用大语言模型从ot和Ht中识别干扰物，SAM3算法提取掩膜，随后通过OpenCV Telea修复技术在执行策略推理前将其消除（图5）。</p>
+</li>
+<li>
+<p>提示词优化器：针对语言歧义问题，该模块对噪声指令进行规范化处理：l′t = Prompt-Refiner(lt, θlang), (10)。其中大语言模型将模糊指令lt重写为与策略对齐的标准化任务描述，其改写模板源自历史成功记录Ht（例如将口语化指令重写为“拾取……并放置……”的简洁形式，如图6所示）。<br>
+<img src="/img/NoisyPrompt.png" alt="NoisyPrompt"></p>
+</li>
+<li>
+<p>链式步进-时间复合：链式步进缩短执行跨度：A′ seq = 链式步进(Aseq, θchain)，(11) 大语言模型利用 Ht 将宏观序列 Aseq 分解为对齐的子任务，并从 θchain 分配时间边界（特别是 Ne, Nb）。将 Aseq 替换为 A′seq 可缩短执行片段，缓解长跨度情境退化问题（例如，如图1所示，长任务被拆分为更短的子任务，并在其间设置“重置与缓冲”）。</p>
+</li>
+<li>
+<p>重演机制：执行停滞处理：Encore通过关键状态恢复解决死锁问题：s′ t = Encore(st, θstuc), (12) 其中θstuc（源自历史故障记录Ht）定义了重试边界[ss, se]与等待时长Nw。该工具通过平均逆向轨迹重置计数器并回滚状态；若时间跨度验证失败，则触发从关键帧ss开始的&quot;重置并重试&quot;流程（图7）。</p>
+</li>
+</ol>
+<p>D. 双阶段记忆巩固<br>
+如图3D所示，该模块通过两阶段归因机制将最新执行轨迹整合至双记忆库M中。</p>
+<ol>
+<li>阶段一：初始诊断：任务终止时，大语言模型执行初始诊断：enew = InitDiag(ot, Traw), (13) 并将新经验存储至记忆库：M = M ∪ {enew}, (14)</li>
+<li>阶段二：记忆巩固：记忆巩固模块检索出前N个相似历史经验Esim = {e1  sim, . . . , eN  sim}进行跨任务联合优化，其形式化表示为：{e∗  new, e1∗  sim, . . . , eN∗  sim } = MemConsol(enew, Esim), (15)  其中每个e∗为更新后的经验元组。大语言模型通过批量级差分分析修正历史失败描述，并利用新证据优化修正方案，从而实现对记忆库M的迭代自我校正，而非单调扩张。</li>
+</ol>
+<h2 id="4-Takeaways">4.Takeaways:</h2>
+<p>VLA模型的OOD故障主要源于感知与协调能力的局限，而非运动功能缺陷</p>
+<h3 id="局限性-未来工作：">局限性&amp;未来工作：</h3>
+<p>未来工作将扩展MCP工具库以覆盖更广泛的故障模式，并探索前沿多模态模型以进一步提升故障归因的细粒度。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>SOMA | arxiv 2026.03.25 | Paper Reading</p><p><a href="https://fanchenlex.github.io/reandings/SOMA/">https://fanchenlex.github.io/reandings/SOMA/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Wenzhuo Li</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2026-03-28</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2026-04-03</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/paper-reading/">paper reading</a></div><div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_copy_link"></a><a class="a2a_button_google_translate"></a><a class="a2a_button_wechat"></a><a class="a2a_button_qzone"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_twitter"></a><a class="a2a_button_print"></a></div><script async src="https://static.addtoany.com/menu/page.js"></script></div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/Alipay.JPG" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechatpay.png" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/reandings/MemER/"><span class="level-item">MemER | arxiv 2025.10.23 | Paper Reading</span><i class="level-item fas fa-chevron-right"></i></a></div></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="Wenzhuo Li"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Wenzhuo Li</p><p class="is-size-6 is-block">Embodied AI</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>PALM Lab, Nanjing, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">47</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories/"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">11</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded is-flex is-align-items-center" href="https://github.com/fanchenlex" target="_blank" rel="me noopener"><span class="icon is-small mr-1"><i class="fab fa-github"></i></span><span>Follow</span></a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="WeChat" href="https://fanchenlex.github.io/img/WeChat.jpg" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/WeChat_icon.png" alt="WeChat" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="QQ" href="https://fanchenlex.github.io/img/qq.jpg" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/QQ_icon.png" alt="QQ" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Google Scholar" href="https://scholar.google.com/citations?user=fyi3WJsAAAAJ&amp;hl=zh-CN" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/Google_Scholar_logo.png" alt="Google Scholar" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="DailyLog" href="https://fanchenlex.github.io/pdf/DailyLog.pdf" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/DailyLog.png" alt="DailyLog" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="RSS" href="/atom.xml" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/RSS.gif" alt="RSS" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a></div></div><style>
+				.widget[data-type=&quot;profile&quot;] .level-item.button img {
+					transition: all 0.3s ease;
+					opacity: 0.8;
+				}
+				
+				.widget[data-type=&quot;profile&quot;] .level-item.button:hover img {
+					opacity: 1;
+					transform: scale(1.1);
+					background-color: rgba(255, 255, 255, 0.2);
+				}
+				
+				.widget[data-type=&quot;profile&quot;] .level-item.button:hover i {
+					transform: scale(1.1);
+				}
+			</style></div><!--!--><div class="card widget"><div class="card-content"><h3 class="menu-label"><i class="fas fa-bullhorn" style="margin-right: 6px;"></i>ANNOUNCEMENT</h3><div class="announcement"><ul class="menu-list"><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/quanzhouxiamen/">[2026-02-15] Had a special New Year in Hokkien.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/southeast_letter/">[2025-07-02] Unboxing the Southeast University Graduate Admission Letter.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/japan_Kansai/">[2025-07-01] Completed graduation trip with my mom —— Kansai, Japan.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/xidian_memories/">[2025-06-20] Graduating from Xidian University.</a></li></ul></div><div style="margin-top: 10px; text-align: center;"><a href="/announcement/">View All Announcements &gt;&gt;</a></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Awards/"><span class="level-start"><span class="level-item">Awards</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/blogs/"><span class="level-start"><span class="level-item">blogs</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/courses/"><span class="level-start"><span class="level-item">courses</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/diary/"><span class="level-start"><span class="level-item">diary</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/categories/projects/"><span class="level-start"><span class="level-item">projects</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/readings/"><span class="level-start"><span class="level-item">readings</span></span><span class="level-end"><span class="level-item tag">26</span></span></a></li></ul></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2026/03/"><span class="level-start"><span class="level-item">March 2026</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/02/"><span class="level-start"><span class="level-item">February 2026</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/01/"><span class="level-start"><span class="level-item">January 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/11/"><span class="level-start"><span class="level-item">November 2025</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/10/"><span class="level-start"><span class="level-item">October 2025</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/07/"><span class="level-start"><span class="level-item">July 2025</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/06/"><span class="level-start"><span class="level-item">June 2025</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/11/"><span class="level-start"><span class="level-item">November 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/06/"><span class="level-start"><span class="level-item">June 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget"><div class="card-content"><h3 class="menu-label">Recents</h3><div class="recent-posts"><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/soma.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-03-28</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/SOMA/">SOMA | arxiv 2026.03.25 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/MemER.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-03-22</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/MemER/">MemER | arxiv 2025.10.23 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/RoboMME.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-03-21</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/RoboMME/">RoboMME | arxiv 2026.03.04 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-03-20</p><p style="margin:0;"><a class="recent-title-link" href="/courses/FirstTerm/">First semester ranking results as a postgraduate student</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/courses/">courses</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/RoboMemory.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-03-19</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/RoboMemory/">RoboMemory | arxiv 2026.02.04 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/International-Communication/"><span class="tag">International Communication</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Technical-Communication/"><span class="tag">Technical Communication</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/addmission-letter/"><span class="tag">addmission letter</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/grades/"><span class="tag">grades</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/graduation/"><span class="tag">graduation</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hand-gesture/"><span class="tag">hand gesture</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/opening-ceremony/"><span class="tag">opening ceremony</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/paper-reading/"><span class="tag">paper reading</span><span class="tag">25</span></a></div><div class="control"><a class="tags has-addons" href="/tags/reading-group/"><span class="tag">reading group</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/study-notes/"><span class="tag">study notes</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/travel/"><span class="tag">travel</span><span class="tag">4</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Zhuo&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2026 Wenzhuo Li</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p><div class="footer-donate" style="marginTop:1.5em;"><p class="is-size-7 has-text-centered has-text-weight-bold">如果你喜欢本站内容，可以请我喝杯咖啡 ☕</p><div class="donate-icons" style="display:flex;gap:1rem;marginTop:1em;"><div class="donate-icon-item" style="position:relative;"><a title="alipay"><i class="fab fa-alipay" style="fontSize:1.5rem;cursor:pointer;"></i></a><div class="donate-qrcode" style="position:absolute;bottom:150%;left:50%;transform:translateX(-50%);background:#fff;padding:8px;border:1px solid #ddd;boxShadow:0 2px 6px rgba(0,0,0,0.15);zIndex:100;"><img src="/img/Alipay.JPG" alt="alipay 收款码" style="width:240px;height:auto;display:block;"><div class="has-text-centered is-size-7" style="marginTop:0.5em;">ALIPAY</div></div></div><div class="donate-icon-item" style="position:relative;"><a title="wechat"><i class="fab fa-weixin" style="fontSize:1.5rem;cursor:pointer;"></i></a><div class="donate-qrcode" style="position:absolute;bottom:150%;left:50%;transform:translateX(-50%);background:#fff;padding:8px;border:1px solid #ddd;boxShadow:0 2px 6px rgba(0,0,0,0.15);zIndex:100;"><img src="/img/wechatpay.png" alt="wechat 收款码" style="width:240px;height:auto;display:block;"><div class="has-text-centered is-size-7" style="marginTop:0.5em;">WECHAT</div></div></div></div></div></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Bilibili" href="https://space.bilibili.com/1613486248?spm_id_from=333.1007.0.0" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Bilibili.svg" alt="Bilibili" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CSDN" href="https://blog.csdn.net/bjddmzdz?type=blog" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/csdn.png" alt="CSDN" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Rednote" href="https://www.xiaohongshu.com/user/profile/611202a5000000000101c50e" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Rednote.png" alt="Rednote" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Notion" href="https://ruby-uranium-845.notion.site/Research-Paper-Planner-201dc477df6b804ba4bad373196d5f03" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Notion.png" alt="Notion" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><script src="/js/night.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script><script type="text/javascript" src="/js/universe.js"></script></body></html>
