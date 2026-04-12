@@ -127,9 +127,9 @@
 <p>原始的 Planner-Critic 机制有个缺陷。如果评论家过于「挑剔」，一直对规划者的计划不满意，机器人就会陷入「重新规划 -&gt;被否决 -&gt;再重新规划」的死循环，卡住不动。RoboMemory 做了一个简单而有效的修改：<strong>计划的第一步不经过评论家审核，直接执行</strong>。这保证了机器人至少能动起来，打破僵局，避免「分析瘫痪」。虽然这像个小「HACK」，但在工程实践中非常有效。</p>
 <p><strong>底层执行器：</strong></p>
 <p>负责将规划模块发出的高层抽象指令（如 <code>pick_up(milk)</code>），翻译成机器人机械臂和底盘可以执行的、精确的电机控制信号。在真实世界的实验中，研究者们使用了一个名为 
-    <span id="mjx-b129144">
+    <span id="mjx-399a1ff">
       <style>
-      #mjx-b129144{
+      #mjx-399a1ff{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
