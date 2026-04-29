@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>VISTA | arxiv 2026.02.12 | Paper Reading - Zhuo&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Zhuo&#039;s Blog"><meta name="msapplication-TileImage" content="/img/logo.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Zhuo&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Scaling World Model for  Hierarchical Manipulation Policies VISTA的作者声称他们是和                   #mjx-4d3ac48{         display:contents;         mjx-assistive-mml {           user-select: text !important;"><meta property="og:type" content="blog"><meta property="og:title" content="VISTA | arxiv 2026.02.12 | Paper Reading"><meta property="og:url" content="https://fanchenlex.github.io/reandings/VISTA/"><meta property="og:site_name" content="Zhuo&#039;s Blog"><meta property="og:description" content="Scaling World Model for  Hierarchical Manipulation Policies VISTA的作者声称他们是和                   #mjx-4d3ac48{         display:contents;         mjx-assistive-mml {           user-select: text !important;"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://fanchenlex.github.io/img/VISTA.png"><meta property="article:published_time" content="2026-04-22T15:10:19.000Z"><meta property="article:modified_time" content="2026-04-29T05:14:03.405Z"><meta property="article:author" content="Wenzhuo Li"><meta property="article:tag" content="paper reading"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://fanchenlex.github.io/img/VISTA.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://fanchenlex.github.io/reandings/VISTA/"},"headline":"VISTA | arxiv 2026.02.12 | Paper Reading","image":["https://fanchenlex.github.io/img/VISTA.png"],"datePublished":"2026-04-22T15:10:19.000Z","dateModified":"2026-04-29T05:14:03.405Z","author":{"@type":"Person","name":"Wenzhuo Li"},"publisher":{"@type":"Organization","name":"Zhuo's Blog","logo":{"@type":"ImageObject","url":"https://fanchenlex.github.io/img/logo.png"}},"description":"Scaling World Model for  Hierarchical Manipulation Policies VISTA的作者声称他们是和                   #mjx-4d3ac48{         display:contents;         mjx-assistive-mml {           user-select: text !important;"}</script><link rel="canonical" href="https://fanchenlex.github.io/reandings/VISTA/"><link rel="icon" href="/img/logo.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Zhuo's Blog" type="application/atom+xml">
+</head><body class="is-3-column"><canvas id="universe"></canvas><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Zhuo&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories/blogs">Blogs</a><a class="navbar-item" href="/publications">Publications</a><a class="navbar-item" href="/categories/projects">Projects</a><a class="navbar-item" href="/categories/courses">Courses</a><a class="navbar-item" href="/gallery">Gallery</a><a class="navbar-item" href="/categories/readings">Readings</a><a class="navbar-item" href="/categories/diary">Diary</a><a class="navbar-item" href="/archives">archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/fanchenlex"><i class="fab fa-github"></i></a><a class="navbar-item night" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/img/VISTA.png" alt="VISTA | arxiv 2026.02.12 | Paper Reading"></span></div><article class="card-content article" role="article"><h1 class="title is-3 is-size-4-mobile">VISTA | arxiv 2026.02.12 | Paper Reading</h1><div class="article-meta is-size-7 is-uppercase level is-mobile mt-2"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2026-04-22T15:10:19.000Z" title="2026/4/22 23:10:19">2026-04-22</time></span><span class="level-item">Updated&nbsp;<time dateTime="2026-04-29T05:14:03.405Z" title="2026/4/29 13:14:03">2026-04-29</time></span><span class="level-item"><a class="link-muted" href="/categories/readings/">readings</a></span><span class="level-item">17 minutes read (About 2547 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><div class="content"><p>Scaling World Model for  Hierarchical Manipulation Policies</p>
+<h3 id="VISTA的作者声称他们是和-pi-0-7-的思路一样并且比他们早2个月提出-的工作，同样用了一个世界模型去基于新颖场景生成多视角且物理一致性的子任务序列，并在每一步提供文本子任务描述与视觉目标图像">VISTA的作者声称他们是和
+    <span id="mjx-4d3ac48">
+      <style>
+      #mjx-4d3ac48{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.375ex;" xmlns="http://www.w3.org/2000/svg" width="3.522ex" height="1.35ex" role="img" focusable="false" viewBox="0 -431 1556.7 596.6" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D70B" d="M132 -11Q98 -11 98 22V33L111 61Q186 219 220 334L228 358H196Q158 358 142 355T103 336Q92 329 81 318T62 297T53 285Q51 284 38 284Q19 284 19 294Q19 300 38 329T93 391T164 429Q171 431 389 431Q549 431 553 430Q573 423 573 402Q573 371 541 360Q535 358 472 358H408L405 341Q393 269 393 222Q393 170 402 129T421 65T431 37Q431 20 417 5T381 -10Q370 -10 363 -7T347 17T331 77Q330 86 330 121Q330 170 339 226T357 318T367 358H269L268 354Q268 351 249 275T206 114T175 17Q164 -11 132 -11Z"></path></g><g data-mml-node="TeXAtom" transform="translate(603,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z" transform="translate(500,0)"></path><path data-c="37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z" transform="translate(778,0)"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>π</mi><mrow data-mjx-texclass="ORD"><mn>0.7</mn></mrow></msub></math></mjx-assistive-mml></mjx-container>
+    </span>
+  的思路一样并且比他们早2个月提出 的工作，同样用了一个世界模型去基于新颖场景生成多视角且物理一致性的子任务序列，并在每一步提供文本子任务描述与视觉目标图像</h3>
+<span id="more"></span>
+<table style="width:100%; border-collapse:collapse;">
+  <thead style="border-bottom:1px solid #ccc;">
+    <tr>
+      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>
+      <th style="padding:8px; text-align:center;">技术路线</th>
+      <th style="padding:8px; text-align:center;">创新点</th>
+      <th style="padding:8px; text-align:center;">日期</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px; text-align:center;">改进</td>
+      <td style="padding:8px; text-align:center;">VLA</td>
+      <td style="padding:8px; text-align:center;">data diversity</td>
+      <td style="padding:8px; text-align:center;">2026-02-12</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="1-What？">1.What？</h2>
+<p>提出了一种分层式视觉-语言-动作框架VISTA，该框架利用大规模预训练世界模型的泛化能力，实现鲁棒且可泛化的视觉子目标任务分解（VISTA）。我们的分层框架VISTA由作为高层规划器的世界模型和作为低层执行器的VLA构成。高层世界模型首先将操作任务分解为带目标图像的子任务序列，低层策略则遵循文本与视觉指引生成动作序列。相较于原始文本目标描述，这些合成的目标图像为低层策略提供了视觉与物理层面的细节依据，使其能够泛化至未见物体及新场景。</p>
+<h2 id="2-Why？">2.Why？</h2>
+<p>预训练视觉-语言模型（VLM）与VLA模型在数据结构上的根本性不匹配。VLM基于成对的图像-文本数据进行训练，以建模离散化的语言分布；而VLA则是在单一指令下，由数百个图像-动作对构成的长序列机器人轨迹上进行训练，学习目标是连续的动作回归。因此，VLA缺乏VLM的零样本泛化能力，需要大量真实世界数据才能实现鲁棒性能。</p>
+<p>语言子目标在语义上泛化良好但缺乏具体的空间与物理约束，而密集视频预测能提供更丰富的细节，却在长时程上受困于时间漂移和物理不一致性。如何利用基础模型的泛化能力，将操作任务抽象为一种既能提升鲁棒性又能提高数据效率的中间表征？这个问题就是作者要解决的问题</p>
+<h2 id="3-How？">3.How？</h2>
+<p><img src="/img/model_VISTA.png" alt="Architecture overview of "><br>
+VISTA框架概览。该框架包含两个核心模块：左侧：VISTA作为高层规划器，通过将视觉目标与文本子任务视为统一的多模态序列，在全局指令和初始观察的条件下，自回归地生成交错的文本子任务与视觉目标。右侧：GoalVLA作为底层控制器，以实时观察和生成的子目标为输入，预测可执行的动作组块。执行过程采用分层管理，其中子任务切换器在当前阶段完成后即过渡至下一阶段</p>
+<p>针对每项操作任务，我们将其划分为多个阶段，每个阶段包含一个原子技能及对应的目标物体或位置。世界模型会生成文本与图像交织的序列，作为各子任务阶段的指令与目标图像；随后，目标条件视觉语言动作模型将判断当前阶段，并以当前观测、当前阶段的子任务指令及目标图像为输入，预测当前动作片段。 最后，讲一下用于训练这两个模块的数据集。</p>
+<p>世界模型构建：我们采用统一的离散表示方法，将视觉与语言映射至共享词表V。图像使用IBQTokenizer[38]进行分词，文本使用Qwen3分词器[1]，两者共同构成分词函数φ。多视角图像按固定顺序展平后，与文本一同转换为离散词元序列S</p>
+<p>推理阶段通过迭代采样自回归生成里程碑序列。从初始上下文(φ(I0), φ(L))出发，模型使用束搜索依次预测后续子任务与目标图像的词元。具体而言，我们维护B个候选序列集合（B为束宽）。在每一步j，给定当前词元历史S&lt;j = (u1, …, uj-1)，计算输出逻辑值并将每个候选序列扩展为概率最高的B个下一词元</p>
+<p>采样过程持续至所有候选序列均生成终止词元。随后选择整体概率最高的序列，并利用逆分词器φ−1在像素级重建目标图像gi。该方法能基于初始输入生成全局连贯的里程碑序列，有效规避贪婪解码可能导致的次优词元级决策。我们在开源EMU3.5检查点基础上进行持续训练，该检查点已在包含导航与操作的文本-图像交织数据上经过2000步训练。</p>
+<p>目标条件视觉语言动作模型构建：在阶段i的每个时间步t，策略以当前观测It、子任务指令li及对应目标图像gi为输入，预测驱动机器人朝向里程碑的动作片段a ∈ Ak。为有效融合视觉信息，我们在将数据输入模型主干前，将当前观测词元与目标图像词元进行拼接。遵循π0[6]的架构，我们采用流匹配目标训练策略以生成连续动作轨迹。定义噪声样本z ∼ N(0, I)与真实动作片段a之间的线性插值为xτ = (1 − τ)z + τa，其中τ ∈ [0, 1]表示流时间。策略预测以(li, It, gi)为条件的对应速度场vτ = a − z。目标是最小化期望均方误差</p>
+<p>子任务感知动作填充：动作片段可能跨越子任务边界（即包含属于阶段i+1的步骤）。为防止策略在未获得更新目标时若提前执行下一阶段，我们将对当前里程碑完成后出现的每个真实数据块部分进行零填充，明确教导策略在目标gi满足后立即停止。</p>
+<p>随机目标图像偏移：世界模型预测的目标图像可能相对于真实子任务终止时刻存在数帧的提前或滞后，这可能导致阶段边界附近的执行不稳定。为使GoalVLA对此类错位具有鲁棒性，我们在子任务i与i+1的边界处定义了时间重叠窗口。对于该窗口内的训练样本，我们随机选用gi或gi+1作为目标条件；当选用gi+1时，我们同时将样本重新标注为阶段i+1以避免零填充。对于阶段i其余部分的样本，我们从终止重叠窗口中随机采样gi，而非使用固定目标帧。这种简单的数据增强使策略能够接触边界噪声，并促进平滑的阶段过渡。</p>
+<p>数据集构建</p>
+<p>a) 数据来源：我们使用来自OpenX-Embodiment [36]、AgiBot World Beta [9] 及我们的Mobile Aloha数据集 [21] 的大规模具身操作数据训练世界模型。尽管语料库超过100万条轨迹，但其标注仅包含全局指令和图像-动作对，缺乏中间里程碑（li, gi）。因此我们引入了自动化轨迹分解流程。</p>
+<p>b) 自动里程碑标注：该流程包含三个步骤**。首先，通过Qwen3 [46] 对指令动词进行聚类，构建包含50种原子技能（如抓取、推动）的技能库。其次，利用Ramer–Douglas–Peucker算法 [17] 分析运动轨迹与夹爪状态变化，通过物理状态变化检测候选里程碑边界。最后，Qwen2.5-VL 72B [2] 合并具有相同技能的相邻片段，并生成自然语言子任务描述li。**该流程将120万条轨迹转换为交错排列的子任务与目标图像序列，覆盖14种具身形态并支持多视角，总计产生152亿令牌（图3）。对于AgiBot数据，我们进一步将抽象任务类型细化为精细化指令。</p>
+<p>c) 任意到图像预训练数据：我们使用一个由SEED-Data-Edit [22]、WeatherStream [53]、ShareGPT-4o-Image [11]等构建的15B词元任意到图像数据集与世界模型进行协同训练。</p>
+<h2 id="4-Takeaways">4.Takeaways:</h2>
+<p>对稳定的视觉子目标进行推理，而非仅仅依赖脆弱的文本子任务或密集且易出错的轨迹预测，可以实现鲁棒的泛化</p>
+<p>仅预测关键帧使得在大规模视频数据集上进行可扩展训练成为可能，通过状态不变性减轻幻觉问题，并提供仅靠语言无法传达的显式空间约束</p>
+<h3 id="局限性-未来工作：">局限性&amp;未来工作：</h3>
+<p>目前的真实世界评估仍局限于抓放任务。将验证扩展到更多样化、更长视程的操作场景是未来工作的重要方向。</p>
+<p>生成的视觉子目标可能相对真实子任务终点存在轻微空间偏差；尽管不常见，但较大偏差可能导致GoalVLA执行失败。</p>
+<p>最后，虽然视觉目标能跨 embodiment 传递有用的交互先验，成功执行仍依赖于真实机器人训练数据中是否存在对应的交互模式。因此，在GoalVLA微调阶段增加技能与任务的多样性对于进一步提升鲁棒性与泛化能力至关重要。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>VISTA | arxiv 2026.02.12 | Paper Reading</p><p><a href="https://fanchenlex.github.io/reandings/VISTA/">https://fanchenlex.github.io/reandings/VISTA/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Wenzhuo Li</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2026-04-22</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2026-04-29</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/paper-reading/">paper reading</a></div><div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_copy_link"></a><a class="a2a_button_google_translate"></a><a class="a2a_button_wechat"></a><a class="a2a_button_qzone"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_twitter"></a><a class="a2a_button_print"></a></div><script async src="https://static.addtoany.com/menu/page.js"></script></div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/Alipay.JPG" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechatpay.png" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/reandings/Pi0.7/"><span class="level-item">$\pi_{0.7}$ | arxiv 2026.04.16 | Paper Reading</span><i class="level-item fas fa-chevron-right"></i></a></div></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="Wenzhuo Li"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Wenzhuo Li</p><p class="is-size-6 is-block">Embodied AI</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>PALM Lab, Nanjing, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">51</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories/"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">11</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded is-flex is-align-items-center" href="https://github.com/fanchenlex" target="_blank" rel="me noopener"><span class="icon is-small mr-1"><i class="fab fa-github"></i></span><span>Follow</span></a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="WeChat" href="https://fanchenlex.github.io/img/WeChat.jpg" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/WeChat_icon.png" alt="WeChat" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="QQ" href="https://fanchenlex.github.io/img/qq.jpg" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/QQ_icon.png" alt="QQ" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Google Scholar" href="https://scholar.google.com/citations?user=fyi3WJsAAAAJ&amp;hl=zh-CN" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/Google_Scholar_logo.png" alt="Google Scholar" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="DailyLog" href="https://fanchenlex.github.io/pdf/DailyLog.pdf" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/DailyLog.png" alt="DailyLog" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="RSS" href="/atom.xml" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/RSS.gif" alt="RSS" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a></div></div><style>
+				.widget[data-type=&quot;profile&quot;] .level-item.button img {
+					transition: all 0.3s ease;
+					opacity: 0.8;
+				}
+				
+				.widget[data-type=&quot;profile&quot;] .level-item.button:hover img {
+					opacity: 1;
+					transform: scale(1.1);
+					background-color: rgba(255, 255, 255, 0.2);
+				}
+				
+				.widget[data-type=&quot;profile&quot;] .level-item.button:hover i {
+					transform: scale(1.1);
+				}
+			</style></div><!--!--><div class="card widget"><div class="card-content"><h3 class="menu-label"><i class="fas fa-bullhorn" style="margin-right: 6px;"></i>ANNOUNCEMENT</h3><div class="announcement"><ul class="menu-list"><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/quanzhouxiamen/">[2026-02-15] Had a special New Year in Hokkien.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/southeast_letter/">[2025-07-02] Unboxing the Southeast University Graduate Admission Letter.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/japan_Kansai/">[2025-07-01] Completed graduation trip with my mom —— Kansai, Japan.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/xidian_memories/">[2025-06-20] Graduating from Xidian University.</a></li></ul></div><div style="margin-top: 10px; text-align: center;"><a href="/announcement/">View All Announcements &gt;&gt;</a></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Awards/"><span class="level-start"><span class="level-item">Awards</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/blogs/"><span class="level-start"><span class="level-item">blogs</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/courses/"><span class="level-start"><span class="level-item">courses</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/diary/"><span class="level-start"><span class="level-item">diary</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/categories/projects/"><span class="level-start"><span class="level-item">projects</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/readings/"><span class="level-start"><span class="level-item">readings</span></span><span class="level-end"><span class="level-item tag">30</span></span></a></li></ul></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2026/04/"><span class="level-start"><span class="level-item">April 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/03/"><span class="level-start"><span class="level-item">March 2026</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/02/"><span class="level-start"><span class="level-item">February 2026</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/01/"><span class="level-start"><span class="level-item">January 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/11/"><span class="level-start"><span class="level-item">November 2025</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/10/"><span class="level-start"><span class="level-item">October 2025</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/07/"><span class="level-start"><span class="level-item">July 2025</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/06/"><span class="level-start"><span class="level-item">June 2025</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/11/"><span class="level-start"><span class="level-item">November 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/06/"><span class="level-start"><span class="level-item">June 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget"><div class="card-content"><h3 class="menu-label">Recents</h3><div class="recent-posts"><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/VISTA.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-04-22</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/VISTA/">VISTA | arxiv 2026.02.12 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/pi07.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-04-17</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/Pi0.7/">$\pi_{0.7}$ | arxiv 2026.04.16 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/RG2.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-04-10</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/RG%E7%A0%94%E4%B8%80%E6%98%A5/">Memory-Augmented Vision-Language-Action Models in Embodied AI:Methodological Advances, Efficiency Challenges, and Future Directions | Reading Group</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/ReMemOverview.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-04-02</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/ReMem/">ReMem | arxiv 2026.03.13 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/soma.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-03-28</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/SOMA/">SOMA | arxiv 2026.03.25 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/International-Communication/"><span class="tag">International Communication</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Technical-Communication/"><span class="tag">Technical Communication</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/addmission-letter/"><span class="tag">addmission letter</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/grades/"><span class="tag">grades</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/graduation/"><span class="tag">graduation</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hand-gesture/"><span class="tag">hand gesture</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/opening-ceremony/"><span class="tag">opening ceremony</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/paper-reading/"><span class="tag">paper reading</span><span class="tag">28</span></a></div><div class="control"><a class="tags has-addons" href="/tags/reading-group/"><span class="tag">reading group</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/study-notes/"><span class="tag">study notes</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/travel/"><span class="tag">travel</span><span class="tag">4</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Zhuo&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2026 Wenzhuo Li</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p><div class="footer-donate" style="marginTop:1.5em;"><p class="is-size-7 has-text-centered has-text-weight-bold">如果你喜欢本站内容，可以请我喝杯咖啡 ☕</p><div class="donate-icons" style="display:flex;gap:1rem;marginTop:1em;"><div class="donate-icon-item" style="position:relative;"><a title="alipay"><i class="fab fa-alipay" style="fontSize:1.5rem;cursor:pointer;"></i></a><div class="donate-qrcode" style="position:absolute;bottom:150%;left:50%;transform:translateX(-50%);background:#fff;padding:8px;border:1px solid #ddd;boxShadow:0 2px 6px rgba(0,0,0,0.15);zIndex:100;"><img src="/img/Alipay.JPG" alt="alipay 收款码" style="width:240px;height:auto;display:block;"><div class="has-text-centered is-size-7" style="marginTop:0.5em;">ALIPAY</div></div></div><div class="donate-icon-item" style="position:relative;"><a title="wechat"><i class="fab fa-weixin" style="fontSize:1.5rem;cursor:pointer;"></i></a><div class="donate-qrcode" style="position:absolute;bottom:150%;left:50%;transform:translateX(-50%);background:#fff;padding:8px;border:1px solid #ddd;boxShadow:0 2px 6px rgba(0,0,0,0.15);zIndex:100;"><img src="/img/wechatpay.png" alt="wechat 收款码" style="width:240px;height:auto;display:block;"><div class="has-text-centered is-size-7" style="marginTop:0.5em;">WECHAT</div></div></div></div></div></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Bilibili" href="https://space.bilibili.com/1613486248?spm_id_from=333.1007.0.0" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Bilibili.svg" alt="Bilibili" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CSDN" href="https://blog.csdn.net/bjddmzdz?type=blog" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/csdn.png" alt="CSDN" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Rednote" href="https://www.xiaohongshu.com/user/profile/611202a5000000000101c50e" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Rednote.png" alt="Rednote" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Notion" href="https://ruby-uranium-845.notion.site/Research-Paper-Planner-201dc477df6b804ba4bad373196d5f03" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Notion.png" alt="Notion" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><script src="/js/night.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script><script type="text/javascript" src="/js/universe.js"></script></body></html>
