@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Embodied Interpretability | arxiv 2026.6.10 | Paper Reading - Zhuo&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Zhuo&#039;s Blog"><meta name="msapplication-TileImage" content="/img/logo.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Zhuo&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Embodied Interpretability: Linking Causal Understanding to Generalization  in Vision-Language-Action Models 这是第一篇我看到的关于VLA可解释性的文章，感觉对于以后的研究会有帮助，可以启发我从可解释性的方面考虑问题和实验设计。"><meta property="og:type" content="blog"><meta property="og:title" content="Embodied Interpretability | arxiv 2026.6.10 | Paper Reading"><meta property="og:url" content="https://fanchenlex.github.io/reandings/Embodied%20Interpretability/"><meta property="og:site_name" content="Zhuo&#039;s Blog"><meta property="og:description" content="Embodied Interpretability: Linking Causal Understanding to Generalization  in Vision-Language-Action Models 这是第一篇我看到的关于VLA可解释性的文章，感觉对于以后的研究会有帮助，可以启发我从可解释性的方面考虑问题和实验设计。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://fanchenlex.github.io/img/EmbodiedInterpretability.png"><meta property="article:published_time" content="2026-09-12T08:41:22.000Z"><meta property="article:modified_time" content="2026-09-12T14:21:01.158Z"><meta property="article:author" content="Wenzhuo Li"><meta property="article:tag" content="paper reading"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://fanchenlex.github.io/img/EmbodiedInterpretability.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://fanchenlex.github.io/reandings/Embodied%20Interpretability/"},"headline":"Embodied Interpretability | arxiv 2026.6.10 | Paper Reading","image":["https://fanchenlex.github.io/img/EmbodiedInterpretability.png"],"datePublished":"2026-09-12T08:41:22.000Z","dateModified":"2026-09-12T14:21:01.158Z","author":{"@type":"Person","name":"Wenzhuo Li"},"publisher":{"@type":"Organization","name":"Zhuo's Blog","logo":{"@type":"ImageObject","url":"https://fanchenlex.github.io/img/logo.png"}},"description":"Embodied Interpretability: Linking Causal Understanding to Generalization  in Vision-Language-Action Models 这是第一篇我看到的关于VLA可解释性的文章，感觉对于以后的研究会有帮助，可以启发我从可解释性的方面考虑问题和实验设计。"}</script><link rel="canonical" href="https://fanchenlex.github.io/reandings/Embodied%20Interpretability/"><link rel="icon" href="/img/logo.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Zhuo's Blog" type="application/atom+xml">
+</head><body class="is-3-column"><canvas id="universe"></canvas><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Zhuo&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories/blogs">Blogs</a><a class="navbar-item" href="/publications">Publications</a><a class="navbar-item" href="/categories/projects">Projects</a><a class="navbar-item" href="/categories/courses">Courses</a><a class="navbar-item" href="/gallery">Gallery</a><a class="navbar-item" href="/categories/readings">Readings</a><a class="navbar-item" href="/categories/diary">Diary</a><a class="navbar-item" href="/archives">archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/fanchenlex"><i class="fab fa-github"></i></a><a class="navbar-item night" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/img/EmbodiedInterpretability.png" alt="Embodied Interpretability | arxiv 2026.6.10 | Paper Reading"></span></div><article class="card-content article" role="article"><h1 class="title is-3 is-size-4-mobile">Embodied Interpretability | arxiv 2026.6.10 | Paper Reading</h1><div class="article-meta is-size-7 is-uppercase level is-mobile mt-2"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2026-09-12T08:41:22.000Z" title="2026/9/12 16:41:22">2026-09-12</time></span><span class="level-item">Updated&nbsp;<time dateTime="2026-09-12T14:21:01.158Z" title="2026/9/12 22:21:01">2026-09-12</time></span><span class="level-item"><a class="link-muted" href="/categories/readings/">readings</a></span><span class="level-item">28 minutes read (About 4163 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><div class="content"><p>Embodied Interpretability: Linking Causal Understanding to Generalization  in Vision-Language-Action Models</p>
+<h3 id="这是第一篇我看到的关于VLA可解释性的文章，感觉对于以后的研究会有帮助，可以启发我从可解释性的方面考虑问题和实验设计。">这是第一篇我看到的关于VLA可解释性的文章，感觉对于以后的研究会有帮助，可以启发我从可解释性的方面考虑问题和实验设计。</h3>
+<span id="more"></span>
+<table style="width:100%; border-collapse:collapse;">
+  <thead style="border-bottom:1px solid #ccc;">
+    <tr>
+      <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th>
+      <th style="padding:8px; text-align:center;">技术路线</th>
+      <th style="padding:8px; text-align:center;">创新点</th>
+      <th style="padding:8px; text-align:center;">日期</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px; text-align:center;">首次</td>
+      <td style="padding:8px; text-align:center;">VLA</td>
+      <td style="padding:8px; text-align:center;">Interpretability</td>
+      <td style="padding:8px; text-align:center;">2026-06-10</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="1-What？">1.What？</h2>
+<p>这篇论文不是提出一个模型而是研究具身领域关于可解释性的这个具体问题。作者通过提出两个核心指标：Interventional Significance Score（ISS）和Nuisance Mass Ratio（NMR）从而量化这个可解释性。<br>
+作者提出的核心假设是：OOD 泛化能力≈是否依赖因果相关视觉证据 也就是说泛化差，不一定只是模型“能力不够”，有可能是模型“看错东西了”。</p>
+<h2 id="2-Why？">2.Why？</h2>
+<p>可解释性对于带有LLM的研究领域都很重要，因为LLM本身是一个黑盒，那么如何让我们提出一个方法后能够通过一些方法验证我们提出的方法是不是有效，这个很重要。<br>
+把“解释”从相关性变成干预这是整篇论文最关键的一步。过去很多 interpretability 方法：<strong>看 attention</strong>。<br>
+比如模型看到：桌子   杯子   机械臂   背景```Attention 告诉你：背景： 0.40杯子： 0.30机械臂：0.20桌子： 0.10 于是我们说 “模型比较关注背景。”但是这里有一个问题：“模型关注它” ≠ “它造成了这个动作”。这两个概念完全不同。<br>
+论文也明确指出，attention 可以告诉你模型“focus 在哪里”，但不能证明这些区域是动作的<strong>causal necessary evidence</strong>。</p>
+<p>举一个非常重要的区别假设：背景是蓝色机械臂在右边杯子在左边<code>模型每次看到：蓝色背景 → 向左抓</code>于是 attention 很可能特别关注蓝色背景。但问题是：蓝色背景真的导致“向左抓”吗？很可能不是。如果你把背景改成：红色背景杯子和机械臂全部没动：正常的、真正理解任务的模型应该：动作几乎不变。但是如果这个模型突然：动作大幅变化那说明：它依赖了背景这个 nuisance feature。这就是作者认为真正的“<strong>因果解释”应该做的事情</strong>：**动输入，看 action 有没有跟着动。**而不是看模型有没有把 attention 放在那里。</p>
+<p>这就是论文<strong>从“attention interpretability”转向“interventional interpretability”的核心思想</strong>。</p>
+<h2 id="3-How？">3.How？</h2>
+<p><img src="/img/Interpretabilityapproach.png" alt="The overview of the proposed interpretability approach."><br>
+<strong>核心方法 1：Interventional Significance Score（ISS）</strong></p>
+<p>这篇论文真正提出的方法是：ISS：Interventional Significance Score可以把它翻译成：<strong>干预显著性分数</strong></p>
+<p>它要回答**如果我把视觉区域 X 改掉，模型的动作到底改变了多少？**改变越大：这个区域对动作越有因果影响</p>
+<p>ISS 的思路其实非常朴素原始输入：图像 → VLA → action</p>
+<p>假设图像中有一个视觉 token: “杯子”</p>
+<p>我们构造一个 counterfactual：原图：桌子 + 杯子 + 机械臂 + 背景</p>
+<p>把“杯子”这个 token 替换掉：干预：桌子 + [杯子被替换] + 机械臂 + 背景</p>
+<p>然后重新跑模型。比较： 
+    <span id="mjx-f3449a5">
+      <style>
+      #mjx-f3449a5{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.667ex;" xmlns="http://www.w3.org/2000/svg" width="7.032ex" height="1.665ex" role="img" focusable="false" viewBox="0 -441 3108.1 736" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="TeXAtom" transform="translate(562,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(936,0)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(1281,0)"><path data-c="1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path></g><g data-mml-node="mi" transform="translate(1758,0)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(2103,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(2703,0)"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mi" transform="translate(3232,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>a</mi><mrow data-mjx-texclass="ORD"><mi>o</mi><mi>r</mi><mi>i</mi><mi>g</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>l</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
+    </span>
+   和 
+    <span id="mjx-a1ed598">
+      <style>
+      #mjx-a1ed598{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="10.287ex" height="1.355ex" role="img" focusable="false" viewBox="0 -441 4547 598.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="TeXAtom" transform="translate(562,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(345,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(945,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(1306,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1772,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(2223,0)"><path data-c="1D463" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path></g><g data-mml-node="mi" transform="translate(2708,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(3174,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(3774,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(4135,0)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(4480,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(4965,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>a</mi><mrow data-mjx-texclass="ORD"><mi>i</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>v</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
+    </span>
+   如果：∥aoriginal−aintervention∥2 很大说明这个 token 很重要。如果几乎没变说明模型其实不太依赖它。论文最终把这种干预影响定义成 KL divergence，并累计整条 expert trajectory 的影响。</p>
+<p>为什么论文不直接把 token 设成 0？这是一个非常细的设计点，但很值得注意。如果直接：xi=0 可能产生一个根本不存在于训练分布中的 feature。比如：正常视觉 token→突然变成全 0→模型看到奇怪的 OOD 表示</p>
+<p>这时候 action 变化可能只是因为你把输入弄坏了而不是因为这个 token 本来就重要。所以作者采用training distribution 上的 modality-specific mean embedding即<strong>把被干预 token 替换成该模态的平均 embedding</strong>。<strong>视觉 token 用视觉均值：μi=EDvis[v] 语言 token 用文本均值</strong>：μi=EDtext[l] 这样更接近把这个信息拿掉而不是塞给模型一个完全奇怪的输入。</p>
+<p>但是把每个 token 单独干预，计算量太恐怖了假设：3 个 camera× 16×16 visual tokens× 很长 trajectory```如果每一个 token 单独干预：T×3×162 次 forward。完全不现实。于是作者使用：Monte Carlo Random Masking</p>
+<p>它到底怎么随机 mask？每次随机生成：Mk∼Bernoulli(p)</p>
+<p>可以简单理解成：杯子    ✓机械臂   ✓背景    ×桌面    ✓</p>
+<p>然后保留的区域：原始图像 ;被 mask 的区域：blurred image</p>
+<p>公式大致是：V~=V⊙M+Vblur⊙(1−M)</p>
+<p>也就是说<strong>不是硬删除，而是把随机选中的区域替换成模糊版本</strong>。然后模型重新预测 action：a^k 和原始 action：a∗ 计算：δk=∥a^k−a∗∥22 再把这个 action difference 归因回<strong>被 mask 的区域</strong>。论文 Algorithm 1 就是在做这个过程。</p>
+<p>这个时候 ISS heatmap 就出来了最终每个视觉 token 都会有一个分数</p>
+<p>背景  0.02机械臂 0.45杯子   0.38桌面   0.03</p>
+<p>┌────────────────────────┐<br>
+│                        │<br>
+│   🔴杯子               │<br>
+│      🔴                │<br>
+│      🔥机械臂          │<br>
+│                        │<br>
+│ 背景   ░░░░░░░░░       │<br>
+└────────────────────────┘</p>
+<p>它得到的是哪些视觉区域真的会改变模型 action？这比 attention map 更接近causal attribution</p>
+<p>为什么论文还要用 Teacher Forcing？这里非常重要。</p>
+<p>假设：原始模型：t1 → t2 → t3 → t4 干预模型：t1’ → t2’ → t3’ → t4’</p>
+<p>如果第一步干预让模型动作稍微不同：t1 ≠ t1’那么后面状态也不一样：t2 ≠ t2’t3 ≠ t3’t4 ≠ t4’最后你发现 action 差很多。但你不知道是因为这个 visual feature 本身很重要，还是因为第一步的小误差滚雪球导致整条轨迹分叉。这会严重污染 attribution。所以作者采用Teacher Forcing即比较原始和干预输入时，都固定在 ground-truth / expert trajectory 上。这样测量的是同一个决策状态下，改变视觉证据会对 action distribution 产生什么影响？”而不是改输入之后整条轨迹最终会变成什么样。论文明确说明这一点是为了避免 trajectory divergence 累积误差。</p>
+<p><strong>第二个核心指标：Nuisance Mass Ratio（NMR）</strong></p>
+<p>ISS 解决每个区域对 action 有多重要？但是研究真正想问的是“模型是不是在依赖错误的东西？所以作者继续做了一步。他们把视觉空间划成三类：① Action-Critical Region：Ωact 比如：-  robot arm -  end-effector 即动作发生的主体。 ② Environmental Support Region：Ωsup比如：-  cup -  table -  rack -  任务相关物体 这些不是机器人本身，但对于执行任务是必要的。 ③ Nuisance Region：Ωnuis比如：-  墙壁颜色 -  背景纹理 -  光照反射 -  无关物体 即：理论上不应该决定 action 的东西。这个三分法是论文后面的理论基础。</p>
+<p>这就引出了一个概念：Causal Markov Blanket</p>
+<p>作者借用了因果图模型里的Markov Blanket意思简单理解就是如果我要预测一个变量，哪些信息是最小且足够的？对于 robot action：M(a)=Ωact∪Ωsup 也就是说机械臂 + 任务相关环境就应该已经足够决定合理 action。那么：Ωnuis 原则上不应该具有真正的 causal influence。如果你的模型却高度依赖 Ωnuis 这就是 causal misalignment。换句话说模型学到的不是“世界真正怎样影响动作，而是“训练数据里什么经常和动作一起出现。</p>
+<p>NMR 到底怎么算？ISS 会产生一张 saliency map。然后取Top-k% 最重要区域比如 Top-10%。</p>
+<p>假设模型最关注的区域里：杯子 40%    机械臂 30%   桌子  20%    背景纹理 10% 那么：NMR@10=10% 意思就是模型 Top-10% 的 causal attribution 里，有 10% 落在 nuisance 区域。论文正式定义的是：ρISS(k)(Ωnuis)=Top-k ISS regions 与 nuisance region 的交集占比</p>
+<p>NMR 最直观的解释</p>
+<p>机械臂     █████<br>
+杯子       █████<br>
+目标位置   ████<br>
+背景       ▏</p>
+<p>那么：NMR→0 这意味着模型几乎不依赖无关背景。有 spurious correlation 的模型</p>
+<p>背景纹理   █████<br>
+墙壁颜色   ████<br>
+阴影       ███<br>
+杯子       ██<br>
+机械臂     █</p>
+<p>那么：NMR→高说明它的决策逻辑已经“跑偏”了。论文明确把 NMR 解释为 causal misalignment 的量化指标。</p>
+<p>作者不是只证明“能解释”如果论文做到“看，这张 heatmap 看起来挺合理。”其实意义没那么大。真正重要的是这个解释指标和泛化能力有没有关系？也就是： 
+    <span id="mjx-4a76631">
+      <style>
+      #mjx-4a76631{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="24.847ex" height="3.012ex" role="img" focusable="false" viewBox="0 -1309.5 10982.6 1331.5" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="mi" transform="translate(888,0)"><path data-c="1D440" d="M289 629Q289 635 232 637Q208 637 201 638T194 648Q194 649 196 659Q197 662 198 666T199 671T201 676T203 679T207 681T212 683T220 683T232 684Q238 684 262 684T307 683Q386 683 398 683T414 678Q415 674 451 396L487 117L510 154Q534 190 574 254T662 394Q837 673 839 675Q840 676 842 678T846 681L852 683H948Q965 683 988 683T1017 684Q1051 684 1051 673Q1051 668 1048 656T1045 643Q1041 637 1008 637Q968 636 957 634T939 623Q936 618 867 340T797 59Q797 55 798 54T805 50T822 48T855 46H886Q892 37 892 35Q892 19 885 5Q880 0 869 0Q864 0 828 1T736 2Q675 2 644 2T609 1Q592 1 592 11Q592 13 594 25Q598 41 602 43T625 46Q652 46 685 49Q699 52 704 61Q706 65 742 207T813 490T848 631L654 322Q458 10 453 5Q451 4 449 3Q444 0 433 0Q418 0 415 7Q413 11 374 317L335 624L267 354Q200 88 200 79Q206 46 272 46H282Q288 41 289 37T286 19Q282 3 278 1Q274 0 267 0Q265 0 255 0T221 1T157 2Q127 2 95 1T58 0Q43 0 39 2T35 11Q35 13 38 25T43 40Q45 46 65 46Q135 46 154 86Q158 92 223 354T289 629Z"></path></g><g data-mml-node="mi" transform="translate(1939,0)"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="mover" transform="translate(2975.8,0)"><g data-mml-node="mo"><path data-c="27F6" d="M84 237T84 250T98 270H1444Q1328 357 1301 493Q1301 494 1301 496T1300 499Q1300 511 1317 511H1320Q1329 511 1332 510T1338 506T1341 497T1344 481T1352 456Q1374 389 1425 336T1544 261Q1553 258 1553 250Q1553 244 1548 241T1524 231T1486 212Q1445 186 1415 152T1370 85T1349 35T1341 4Q1339 -6 1336 -8T1320 -11Q1300 -11 1300 0Q1300 7 1305 25Q1337 151 1444 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mo" transform="translate(652.1,711) scale(0.707)"><path data-c="3F" d="M226 668Q190 668 162 656T124 632L114 621Q116 621 119 620T130 616T145 607T157 591T162 567Q162 544 147 529T109 514T71 528T55 566Q55 625 100 661T199 704Q201 704 210 704T224 705H228Q281 705 320 692T378 656T407 612T416 567Q416 503 361 462Q267 395 247 303Q242 279 242 241V224Q242 205 239 202T222 198T205 201T202 218V249Q204 320 220 371T255 445T292 491T315 537Q317 546 317 574V587Q317 604 315 615T304 640T277 661T226 668ZM162 61Q162 89 180 105T224 121Q247 119 264 104T281 61Q281 31 264 16T222 1Q197 1 180 16T162 61Z"></path></g></g><g data-mml-node="mi" transform="translate(4891.6,0)"><path data-c="1D442" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"></path></g><g data-mml-node="mi" transform="translate(5654.6,0)"><path data-c="1D442" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"></path></g><g data-mml-node="mi" transform="translate(6417.6,0)"><path data-c="1D437" d="M287 628Q287 635 230 637Q207 637 200 638T193 647Q193 655 197 667T204 682Q206 683 403 683Q570 682 590 682T630 676Q702 659 752 597T803 431Q803 275 696 151T444 3L430 1L236 0H125H72Q48 0 41 2T33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM703 469Q703 507 692 537T666 584T629 613T590 629T555 636Q553 636 541 636T512 636T479 637H436Q392 637 386 627Q384 623 313 339T242 52Q242 48 253 48T330 47Q335 47 349 47T373 46Q499 46 581 128Q617 164 640 212T683 339T703 469Z"></path></g><g data-mml-node="mtext" transform="translate(7245.6,0)"><path data-c="A0" d=""></path></g><g data-mml-node="mi" transform="translate(7495.6,0)"><path data-c="1D446" d="M308 24Q367 24 416 76T466 197Q466 260 414 284Q308 311 278 321T236 341Q176 383 176 462Q176 523 208 573T273 648Q302 673 343 688T407 704H418H425Q521 704 564 640Q565 640 577 653T603 682T623 704Q624 704 627 704T632 705Q645 705 645 698T617 577T585 459T569 456Q549 456 549 465Q549 471 550 475Q550 478 551 494T553 520Q553 554 544 579T526 616T501 641Q465 662 419 662Q362 662 313 616T263 510Q263 480 278 458T319 427Q323 425 389 408T456 390Q490 379 522 342T554 242Q554 216 546 186Q541 164 528 137T492 78T426 18T332 -20Q320 -22 298 -22Q199 -22 144 33L134 44L106 13Q83 -14 78 -18T65 -22Q52 -22 52 -14Q52 -11 110 221Q112 227 130 227H143Q149 221 149 216Q149 214 148 207T144 186T142 153Q144 114 160 87T203 47T255 29T308 24Z"></path></g><g data-mml-node="mi" transform="translate(8140.6,0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(8712.6,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mi" transform="translate(9145.6,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mi" transform="translate(9578.6,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(10044.6,0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(10513.6,0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi><mi>M</mi><mi>R</mi><mover><mo stretchy="false">⟶</mo><mo>?</mo></mover><mi>O</mi><mi>O</mi><mi>D</mi><mtext> </mtext><mi>S</mi><mi>u</mi><mi>c</mi><mi>c</mi><mi>e</mi><mi>s</mi><mi>s</mi></math></mjx-assistive-mml></mjx-container>
+    </span>
+  </p>
+<p>实验发现：NMR 越高，泛化越差他们在 AGNOSTOS 上测试 π0.5。训练3600 episodes测试575 episodes测试分为：Seen训练过的任务。</p>
+<p>U1有部分语义重叠。例如：相似物体 / 相似 action primitive</p>
+<p>U2真正新任务： 既没有相同物体，也没有相同 action。</p>
+<p>然后他们计算：NMR@k 和：Task Success 之间的 Pearson correlation。</p>
+<p>最强的是：r=−0.77 在NMR@10 处取得。也就是**模型越依赖 nuisance feature，任务成功率越低。**这是整篇论文最重要的实验发现。</p>
+<p>这其实改变了“具身可解释性”的目标以前Interpretability = “告诉我模型看了哪里“</p>
+<p>作者认为 ISS 比 Attention 更合理：</p>
+<p>作者做了两类实验：</p>
+<ol>
+<li>Robustness</li>
+</ol>
+<p>给 nuisance region 加 Gaussian noise如果只是扰动无关区域，好的 attribution 应该保持稳定。他们比较：ISS，attention，token norm</p>
+<p>结果：ISS 在 attribution stability 和 action consistency 上更好的 Pareto trade-off。<br>
+论文报告的一个对比点是 ISS 的 saliency cosine similarity 为 0.995，而 attention 为 0.959</p>
+<ol start="2">
+<li>Fidelity</li>
+</ol>
+<p>对 nuisance 区域做三种结构化干预：texture，geometric，patch</p>
+<p>然后看saliency map 的变化和action MSE 的变化是不是同步。ISS 的 Pearson correlation 分别达到：0.78,0.64,0.72明显高于 attention 和 token norm。进一步的 unseen geometric intervention 上，ISS 的相关系数达到：0.79 而 attention 是：0.60 token norm 是：0.48所以作者的观点不是：attention 完全没用。而是：<strong>attention 主要描述“哪里有高响应”，ISS 则更接近“改变哪里会导致行为发生改变”。</strong></p>
+<p>同一个任务：<strong>“stack the other cups on the top of the red cup”</strong></p>
+<p>成功轨迹更多依赖：机械臂，end-effector，cups 失败轨迹则更容易依赖：background，texture，shadow</p>
+<p>也就是说：**模型失败并不只是“没看清楚”，可能是“看错了”。<strong>这两者是完全不同的问题。这对机器人研究很重要。因为如果你只是做failure analysis = 看模型哪里走错了。你只能知道“动作错了。”但是 ISS 能进一步问：</strong>“为什么错？因为它把注意力/因果依赖放到了错误的视觉区域。”**这就开始接近 mechanistic diagnosis 了。</p>
+<h2 id="4-Takeaways">4.Takeaways:</h2>
+<p>后面实验可以通过这几个指标来研究评价可解释性</p>
+<p>可以把“causal alignment”作为一种模型训练目标，而不只是解释工具</p>
+<p>这篇论文主要把 ISS/NMR 当作：<strong>diagnostic tool</strong>不是直接用来训练模型。但这恰好留下了一个非常自然的研究方向。</p>
+<p>例如：L=Laction+λLcausal让：Lcausal 惩罚：ISS(Ωnuis) 或者：NMR过高。那么你的模型就不只是：**“动作做对。”<strong>还被要求：</strong>“尽量通过正确的视觉证据做对。”**这个思想我个人认为比单纯attention regularization更有意思</p>
+<p><strong>“可解释性”可以反过来帮助数据集设计</strong> 这是我觉得很多人容易忽略的一点。如果你发现：某个 benchmark 的模型 NMR 极低。这不一定意味着模型特别聪明。可能意味着**任务太简单，没有明显的 spurious correlation。**相反，如果：background 一换模型就崩。说明数据集实际上存在：<strong>shortcut learning opportunity</strong>于是 NMR 可以帮助你回答：**这个 benchmark 到底有没有真正测试 causal generalization？**所以：Interpretability→Benchmark Diagnosis这是一个很有价值的方向。</p>
+<h3 id="总结">总结</h3>
+<p>这篇论文不是在说：**“我们发明了一个更好的 heatmap。”**它真正做的是把一个很重要的问题提出得更清楚：**一个 VLA 如果在训练环境里成功了，我们怎么知道它是真的学会了任务，而不是记住了背景和纹理？**它的答案是：</p>
+<h3 id="第一步">第一步</h3>
+<p>对视觉证据进行干预。Change visual evidence→observe action change 得到：ISS</p>
+<h3 id="第二步">第二步</h3>
+<p>看模型最重要的区域里面，有多少其实是 nuisance。即NMR</p>
+<h3 id="第三步">第三步</h3>
+<p>验证：NMR↑⇒OOD Success↓</p>
+<p>在论文实验里，NMR@10 和任务成功率达到了 <strong>−0.77 的 Pearson 相关</strong>。</p>
+<p>所以全文可以浓缩成：Causal Attribution→Causal Alignment→Generalization</p>
+<p>这条链我认为就是这篇论文最核心的思想。</p>
+<p>对我自己的研究来说<strong>重点吸收的不是 ISS 这个具体公式，而是它背后的研究范式</strong>：</p>
+<blockquote>
+<p><strong>不要只问“模型成功了吗？”</strong></p>
+<p><strong>不要只问“模型看哪里？”</strong></p>
+<p><strong>而要问“改变什么信息，会改变它的动作？”</strong></p>
+<p><strong>再问“它改变动作的依据，是不是物理任务真正需要的因素？”</strong></p>
+</blockquote>
+<h3 id="局限性-未来工作：">局限性&amp;未来工作：</h3>
+<p>还没有解决“完整的具身可解释性”.这个一定要看清楚。它现在回答的是：**哪些视觉特征影响 action？**但它还没有真正回答：**模型内部到底形成了什么世界模型？**更没有完整回答：**为什么这个视觉因素在物理世界中会导致这个动作？**所以：Visual causal attribution还不是：Full embodied causal understanding这是两件事。</p>
+<h3 id="1-Action-distribution-multimodal">1. Action distribution multimodal</h3>
+<p>现在 ISS 用 action MSE 近似 KL divergence，需要一定的 unimodal assumption。如果一个状态：向左走可以成功；向右绕过去也可以成功。那么两个 action mode 都合理。这时候简单的 MSE 可能把两个合法 mode 的差异错误地当成“因果变化”。论文明确指出，这会影响 multimodal / ambiguous long-horizon settings 下的 attribution validity。</p>
+<h3 id="2-ISS-现在很慢">2. ISS 现在很慢</h3>
+<p>最佳设置：N=100,p=0.3 总 latency 约：5.18s throughput：0.19Hz 所以它更适合：<strong>offline diagnosis</strong>而不是：<strong>online real-time control</strong>。</p>
+<h3 id="3-NMR-依赖-nuisance-mask">3. NMR 依赖 nuisance mask</h3>
+<p>如果你告诉模型：哪一块是 background。那当然很容易计算 NMR。但真实机器人世界里：谁来准确标记 nuisance？论文指出真实环境通常要依赖 segmentation，而 segmentation 本身就可能出错。</p>
+<p>真正的“具身可解释性”最终应该到：</p>
+<p><strong>Observation→Internal concept/state→Physical causal model→Action</strong></p>
+<p>也就是说，不只是：“模型为什么动手？”而是：<strong>“模型内部认为世界是什么样、它认为什么因素会导致什么结果、这个内部因果模型如何产生动作？</strong></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Embodied Interpretability | arxiv 2026.6.10 | Paper Reading</p><p><a href="https://fanchenlex.github.io/reandings/Embodied Interpretability/">https://fanchenlex.github.io/reandings/Embodied Interpretability/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Wenzhuo Li</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2026-09-12</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2026-09-12</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/paper-reading/">paper reading</a></div><div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_copy_link"></a><a class="a2a_button_google_translate"></a><a class="a2a_button_wechat"></a><a class="a2a_button_qzone"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_twitter"></a><a class="a2a_button_print"></a></div><script async src="https://static.addtoany.com/menu/page.js"></script></div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/Alipay.JPG" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechatpay.png" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/reandings/skillmemo/"><span class="level-item">SkillMemo | arxiv 2026.8.6 | Paper Reading</span><i class="level-item fas fa-chevron-right"></i></a></div></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/profile%20ai.png" alt="Wenzhuo Li"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Wenzhuo Li</p><p class="is-size-6 is-block">Embodied AI</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>PALM Lab, Nanjing, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">67</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories/"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">13</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded is-flex is-align-items-center" href="https://github.com/fanchenlex" target="_blank" rel="me noopener"><span class="icon is-small mr-1"><i class="fab fa-github"></i></span><span>Follow</span></a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="WeChat" href="https://fanchenlex.github.io/img/WeChat.jpg" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/WeChat_icon.png" alt="WeChat" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="QQ" href="https://fanchenlex.github.io/img/qq.jpg" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/QQ_icon.png" alt="QQ" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Google Scholar" href="https://scholar.google.com/citations?user=fyi3WJsAAAAJ&amp;hl=zh-CN" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/Google_Scholar_logo.png" alt="Google Scholar" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="WeeklyLog" href="https://fanchenlex.github.io/pdf/WeeklyLog2026.pdf" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/WeeklyLog.png" alt="WeeklyLog" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="RSS" href="/atom.xml" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/RSS.gif" alt="RSS" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a></div></div><style>
+				.widget[data-type=&quot;profile&quot;] .level-item.button img {
+					transition: all 0.3s ease;
+					opacity: 0.8;
+				}
+				
+				.widget[data-type=&quot;profile&quot;] .level-item.button:hover img {
+					opacity: 1;
+					transform: scale(1.1);
+					background-color: rgba(255, 255, 255, 0.2);
+				}
+				
+				.widget[data-type=&quot;profile&quot;] .level-item.button:hover i {
+					transform: scale(1.1);
+				}
+			</style></div><!--!--><div class="card widget"><div class="card-content"><h3 class="menu-label"><i class="fas fa-bullhorn" style="margin-right: 6px;"></i>ANNOUNCEMENT</h3><div class="announcement"><ul class="menu-list"><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/quanzhouxiamen/">[2026-02-15] Had a special New Year in Hokkien.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/southeast_letter/">[2025-07-02] Unboxing the Southeast University Graduate Admission Letter.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/japan_Kansai/">[2025-07-01] Completed graduation trip with my mom —— Kansai, Japan.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/xidian_memories/">[2025-06-20] Graduating from Xidian University.</a></li></ul></div><div style="margin-top: 10px; text-align: center;"><a href="/announcement/">View All Announcements &gt;&gt;</a></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Awards/"><span class="level-start"><span class="level-item">Awards</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/blogs/"><span class="level-start"><span class="level-item">blogs</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/courses/"><span class="level-start"><span class="level-item">courses</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/diary/"><span class="level-start"><span class="level-item">diary</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/projects/"><span class="level-start"><span class="level-item">projects</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/readings/"><span class="level-start"><span class="level-item">readings</span></span><span class="level-end"><span class="level-item tag">44</span></span></a></li></ul></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2026/09/"><span class="level-start"><span class="level-item">September 2026</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/08/"><span class="level-start"><span class="level-item">August 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/07/"><span class="level-start"><span class="level-item">July 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/06/"><span class="level-start"><span class="level-item">June 2026</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/05/"><span class="level-start"><span class="level-item">May 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/04/"><span class="level-start"><span class="level-item">April 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/03/"><span class="level-start"><span class="level-item">March 2026</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/02/"><span class="level-start"><span class="level-item">February 2026</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/01/"><span class="level-start"><span class="level-item">January 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/11/"><span class="level-start"><span class="level-item">November 2025</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/10/"><span class="level-start"><span class="level-item">October 2025</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/07/"><span class="level-start"><span class="level-item">July 2025</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/06/"><span class="level-start"><span class="level-item">June 2025</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/11/"><span class="level-start"><span class="level-item">November 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/06/"><span class="level-start"><span class="level-item">June 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget"><div class="card-content"><h3 class="menu-label">Recents</h3><div class="recent-posts"><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/EmbodiedInterpretability.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-09-12</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/Embodied%20Interpretability/">Embodied Interpretability | arxiv 2026.6.10 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/skillmemo.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-08-24</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/skillmemo/">SkillMemo | arxiv 2026.8.6 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/atlasvla.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-08-23</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/AtlasVLA/">AtlasVLA | arxiv 2026.8.7 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/robottt.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-08-11</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/RoboTTT/">RoboTTT | arxiv 2026.7.16 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/damvla.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-08-01</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/DAM-VLA/">DAM-VLA | ICRA 2026 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Academic-Writing/"><span class="tag">Academic Writing</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/International-Communication/"><span class="tag">International Communication</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Technical-Communication/"><span class="tag">Technical Communication</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/addmission-letter/"><span class="tag">addmission letter</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/concert/"><span class="tag">concert</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/grades/"><span class="tag">grades</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/graduation/"><span class="tag">graduation</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hand-gesture/"><span class="tag">hand gesture</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/opening-ceremony/"><span class="tag">opening ceremony</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/paper-reading/"><span class="tag">paper reading</span><span class="tag">42</span></a></div><div class="control"><a class="tags has-addons" href="/tags/reading-group/"><span class="tag">reading group</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/study-notes/"><span class="tag">study notes</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/travel/"><span class="tag">travel</span><span class="tag">4</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Zhuo&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2026 Wenzhuo Li</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p><div class="footer-donate" style="marginTop:1.5em;"><p class="is-size-7 has-text-centered has-text-weight-bold">如果你喜欢本站内容，可以请我喝杯咖啡 ☕</p><div class="donate-icons" style="display:flex;gap:1rem;marginTop:1em;"><div class="donate-icon-item" style="position:relative;"><a title="alipay"><i class="fab fa-alipay" style="fontSize:1.5rem;cursor:pointer;"></i></a><div class="donate-qrcode" style="position:absolute;bottom:150%;left:50%;transform:translateX(-50%);background:#fff;padding:8px;border:1px solid #ddd;boxShadow:0 2px 6px rgba(0,0,0,0.15);zIndex:100;"><img src="/img/Alipay.JPG" alt="alipay 收款码" style="width:240px;height:auto;display:block;"><div class="has-text-centered is-size-7" style="marginTop:0.5em;">ALIPAY</div></div></div><div class="donate-icon-item" style="position:relative;"><a title="wechat"><i class="fab fa-weixin" style="fontSize:1.5rem;cursor:pointer;"></i></a><div class="donate-qrcode" style="position:absolute;bottom:150%;left:50%;transform:translateX(-50%);background:#fff;padding:8px;border:1px solid #ddd;boxShadow:0 2px 6px rgba(0,0,0,0.15);zIndex:100;"><img src="/img/wechatpay.png" alt="wechat 收款码" style="width:240px;height:auto;display:block;"><div class="has-text-centered is-size-7" style="marginTop:0.5em;">WECHAT</div></div></div></div></div></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Bilibili" href="https://space.bilibili.com/1613486248?spm_id_from=333.1007.0.0" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Bilibili.svg" alt="Bilibili" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CSDN" href="https://blog.csdn.net/bjddmzdz?type=blog" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/csdn.png" alt="CSDN" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Rednote" href="https://www.xiaohongshu.com/user/profile/611202a5000000000101c50e" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Rednote.png" alt="Rednote" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Notion" href="https://ruby-uranium-845.notion.site/Research-Paper-Planner-201dc477df6b804ba4bad373196d5f03" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Notion.png" alt="Notion" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><script src="/js/night.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script><script type="text/javascript" src="/js/universe.js"></script></body></html>
