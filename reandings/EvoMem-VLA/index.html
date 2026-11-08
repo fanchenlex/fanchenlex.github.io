@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>EvoMem-VLA | State-Evolution Memory | Project Reading - Zhuo&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Zhuo&#039;s Blog"><meta name="msapplication-TileImage" content="/img/logo.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Zhuo&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="EvoMem-VLA: State-Evolution Memory for Long-Horizon Robot Manipulation 这篇工作的核心是把“过去看到了什么”与“过去发生了什么变化”一起交给策略。它通过有方向、以源状态为条件的 delta tokens 保存交互变化，再以近期状态链和关键帧变化记忆支持动作生成。对 JEPA + VLA + Memory 方向，最值得关注的是变化"><meta property="og:type" content="blog"><meta property="og:title" content="EvoMem-VLA | State-Evolution Memory | Project Reading"><meta property="og:url" content="https://fanchenlex.github.io/reandings/EvoMem-VLA/"><meta property="og:site_name" content="Zhuo&#039;s Blog"><meta property="og:description" content="EvoMem-VLA: State-Evolution Memory for Long-Horizon Robot Manipulation 这篇工作的核心是把“过去看到了什么”与“过去发生了什么变化”一起交给策略。它通过有方向、以源状态为条件的 delta tokens 保存交互变化，再以近期状态链和关键帧变化记忆支持动作生成。对 JEPA + VLA + Memory 方向，最值得关注的是变化"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://fanchenlex.github.io/img/EvoMem-VLA.png"><meta property="article:published_time" content="2026-11-08T02:00:00.000Z"><meta property="article:modified_time" content="2026-11-08T04:39:43.125Z"><meta property="article:author" content="Wenzhuo Li"><meta property="article:tag" content="paper reading"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://fanchenlex.github.io/img/EvoMem-VLA.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://fanchenlex.github.io/reandings/EvoMem-VLA/"},"headline":"EvoMem-VLA | State-Evolution Memory | Project Reading","image":["https://fanchenlex.github.io/img/EvoMem-VLA.png"],"datePublished":"2026-11-08T02:00:00.000Z","dateModified":"2026-11-08T04:39:43.125Z","author":{"@type":"Person","name":"Wenzhuo Li"},"publisher":{"@type":"Organization","name":"Zhuo's Blog","logo":{"@type":"ImageObject","url":"https://fanchenlex.github.io/img/logo.png"}},"description":"EvoMem-VLA: State-Evolution Memory for Long-Horizon Robot Manipulation 这篇工作的核心是把“过去看到了什么”与“过去发生了什么变化”一起交给策略。它通过有方向、以源状态为条件的 delta tokens 保存交互变化，再以近期状态链和关键帧变化记忆支持动作生成。对 JEPA + VLA + Memory 方向，最值得关注的是变化"}</script><link rel="canonical" href="https://fanchenlex.github.io/reandings/EvoMem-VLA/"><link rel="icon" href="/img/logo.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Zhuo's Blog" type="application/atom+xml">
+</head><body class="is-3-column"><canvas id="universe"></canvas><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Zhuo&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories/blogs">Blogs</a><a class="navbar-item" href="/categories/publications">Publications</a><a class="navbar-item" href="/categories/projects">Projects</a><a class="navbar-item" href="/categories/courses">Courses</a><a class="navbar-item" href="/gallery">Gallery</a><a class="navbar-item" href="/categories/readings">Readings</a><a class="navbar-item" href="/categories/diary">Diary</a><a class="navbar-item" href="/archives">archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/fanchenlex"><i class="fab fa-github"></i></a><a class="navbar-item night" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/img/EvoMem-VLA.png" alt="EvoMem-VLA | State-Evolution Memory | Project Reading"></span></div><article class="card-content article" role="article"><h1 class="title is-3 is-size-4-mobile">EvoMem-VLA | State-Evolution Memory | Project Reading</h1><div class="article-meta is-size-7 is-uppercase level is-mobile mt-2"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2026-11-08T02:00:00.000Z" title="2026/11/8 10:00:00">2026-11-08</time></span><span class="level-item">Updated&nbsp;<time dateTime="2026-11-08T04:39:43.125Z" title="2026/11/8 12:39:43">2026-11-08</time></span><span class="level-item"><a class="link-muted" href="/categories/readings/">readings</a></span><span class="level-item">28 minutes read (About 4182 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><div class="content"><p>EvoMem-VLA: State-Evolution Memory for Long-Horizon Robot Manipulation</p>
+<h3 id="这篇工作的核心是把“过去看到了什么”与“过去发生了什么变化”一起交给策略。它通过有方向、以源状态为条件的-delta-tokens-保存交互变化，再以近期状态链和关键帧变化记忆支持动作生成。对-JEPA-VLA-Memory-方向，最值得关注的是变化表示是否保留任务进度，以及如何用受控消融区分变化编码与子任务规划的贡献。">这篇工作的核心是把“过去看到了什么”与“过去发生了什么变化”一起交给策略。它通过有方向、以源状态为条件的 delta tokens 保存交互变化，再以近期状态链和关键帧变化记忆支持动作生成。对 JEPA + VLA + Memory 方向，最值得关注的是变化表示是否保留任务进度，以及如何用受控消融区分变化编码与子任务规划的贡献。</h3>
+<span id="more"></span>
+<table style="width:100%; border-collapse:collapse;">
+  <thead style="border-bottom:1px solid #ccc;"><tr>
+    <th style="padding:8px; text-align:center;">工作类型(首次/改进)</th><th style="padding:8px; text-align:center;">技术路线</th><th style="padding:8px; text-align:center;">创新点</th><th style="padding:8px; text-align:center;">资料状态</th>
+  </tr></thead>
+  <tbody><tr>
+    <td style="padding:8px; text-align:center;">改进</td><td style="padding:8px; text-align:center;">QwenOFT + DINOv3 + state-evolution memory</td><td style="padding:8px; text-align:center;">条件变化编码 + 多尺度历史 + 任务路由</td><td style="padding:8px; text-align:center;">项目页；2026-11-08 查阅</td>
+  </tr></tbody>
+</table>
+<p>资料：<a target="_blank" rel="noopener" href="https://yuhengna.github.io/EvoMem-VLA/">项目页</a> · <a target="_blank" rel="noopener" href="https://yuhengna.github.io/EvoMem-VLA/#method">方法章节</a> · <a target="_blank" rel="noopener" href="https://github.com/YuhengNa/EvoMem-VLA-Code">官方仓库</a>。</p>
+<p>配套：<a href="/downloads/notion-readings-2026-11-08.zip">Notion 笔记导入包，含两篇笔记、研究对照与原图</a>。</p>
+<p>**阅读边界：**截至本次查阅，项目页的 Paper 按钮不可点击，Checkpoint 显示 Coming Soon；仓库只有 README 与忽略规则，明确说明代码、权重、训练和评估入口尚待发布。因此本文依据完整项目页、方法图、结果图、任务切换数据和 README 整理，不将未公开的训练目标、超参数或实现细节写成论文事实。项目引文给出年份 2026，没有可核对的具体论文发布日期。</p>
+<h2 id="1-What？">1.What？</h2>
+<p>EvoMem-VLA 是一个面向长时程、依赖历史证据的机器人操作框架。官方 README 说明策略基于 StarVLA 的 QwenOFT 框架实现，视觉变化分支使用冻结的 DINOv3 特征。</p>
+<p>它把记忆的基本内容从孤立的历史状态扩展为<strong>与状态证据绑定的变化表示</strong>。策略既能访问历史图像所描述的状态，也能读取有序帧对之间的 delta tokens，利用这些信息判断交互是否完成、当前处于哪个阶段，以及接下来应执行什么动作。</p>
+<p>这里的 delta 表示来自两个已经观测到的状态。当前公开内容没有将它定义为未来预测误差、显式三维位移、光流或动作标签，也没有说明部署时通过梯度更新网络权重。</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>公开资料确认的作用</th>
+<th>需要避免的误读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conditional Delta Tokenizer</td>
+<td>编码有序 source–target 帧对，生成有方向、以源状态为条件的变化表示</td>
+<td>直接做两帧特征相减</td>
+</tr>
+<tr>
+<td>State-Evolution Memory</td>
+<td>关联保存视觉状态与变化证据</td>
+<td>只存一个递归向量或只有历史截图</td>
+</tr>
+<tr>
+<td>Shared VLM</td>
+<td>结合指令、当前观测、历史记忆支持多种输出</td>
+<td>三个完全独立的主干模型</td>
+</tr>
+<tr>
+<td>Task-adaptive routing</td>
+<td>普通任务直接生成动作，多阶段任务先生成可执行子任务</td>
+<td>每次动作都必须先输出自然语言推理</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-Why？">2.Why？</h2>
+<h3 id="2-1-当前画面可以相同，正确动作却不同">2.1 当前画面可以相同，正确动作却不同</h3>
+<p>重复举杯后，杯子回到相似位置；按钮按下再弹起后，图像也接近原状态。如果任务要求“先按左键九次，再按中键一次，最后按终止键”，当前图像无法单独确定还剩几次。控制需要追踪已经完成的交互。</p>
+<p>历史截图能恢复部分证据，但稀疏抽帧仍会遗漏两个状态之间发生的过程。EvoMem-VLA 的出发点是：把变化作为明确的表示交给策略，降低策略从孤立状态中重新推断进度的负担。</p>
+<p><img src="/img/EvoMem-VLA-overview.png" alt="孤立状态与状态变化记忆的区别，来自项目页 overview"></p>
+<h3 id="2-2-为什么状态与变化要一起保存？">2.2 为什么状态与变化要一起保存？</h3>
+<p>相同外观变化在不同源状态、不同物体或不同任务阶段下，含义并不相同。仅保存一个无上下文差值，难以说明“谁从什么状态变成了什么状态”。项目将 delta token 与对应状态证据配对，强调 source-conditioned 的方向关系。</p>
+<p>这为对象状态与任务进度建模提供了入口，但不等于已经得到因果模型。公开模块输入描述是有序图像对，尚不能据此断言它分离了机器人动作、外部扰动和相机运动的影响。</p>
+<h2 id="3-How？">3.How？</h2>
+<h3 id="3-1-条件变化编码：冻结视觉表征，学习表示变化">3.1 条件变化编码：冻结视觉表征，学习表示变化</h3>
+<p><img src="/img/EvoMem-VLA.png" alt="EvoMem-VLA 共享主干、Delta Tokenizer 与多尺度记忆，来自项目页方法图"></p>
+<p>方法图右上角给出了清楚的数据流：Source 与 Target 图像分别经过冻结的 DINOv3，输出特征送入 Delta Encoder，得到带有方向下标的 delta token。项目正文进一步说明它是 directional、source-conditioned 的编码。</p>
+<p>**公开信息能确认的是输入、方向与用途。**Delta Encoder 的网络层数、token 数量、预训练数据、监督目标、是否使用重建解码器及其损失系数尚未公开。不能因为模块叫 tokenizer，就直接把它等同于带离散码本的 VQ 模型。</p>
+<p>方法消融中的 naive feature difference 与学习型 delta tokenizer 有明确性能差距，说明在这个系统及协议下，简单特征差并未替代学习型编码。但这项消融本身尚未识别 tokenizer 究竟学到了动作结果、时间间隔还是其他辅助线索。</p>
+<h3 id="3-2-多尺度记忆：近期状态链与较早关键变化">3.2 多尺度记忆：近期状态链与较早关键变化</h3>
+<p>方法图将历史分为两个部分：</p>
+<ol>
+<li>**Recent state-change chain：**初始观测、近期观测和当前观测之间插入三组 delta tokens。图中标注了初始时刻、当前时刻以及相隔 15、30 步的历史位置；这些下标不能在缺少采样协议时换算成秒或控制频率。</li>
+<li>**Keyframe-change memory：**保存更早的关键帧，并关联关键帧附近的变化证据。图中呈现关键帧与其前 15 步观测之间的 delta，形成较长期的状态—变化绑定。</li>
+</ol>
+<p>官方 README 对使用范围有进一步限定：**RMBench 使用初始与近期观测及三组近期 delta tokens，不使用 keyframe memory；RoboMME 与真机任务启用 keyframe-change memory。**因此不能将 RMBench 的提升直接归因于长期关键帧模块。</p>
+<p>图中虽然有 Keyframe Head，公开资料尚未给出它的标签构造、选择阈值、容量上限、替换规则或长期存储开销。多尺度表示不自动意味着固定容量或任意长历史均可保存。</p>
+<h3 id="3-3-共享-VLM-与任务路由">3.3 共享 VLM 与任务路由</h3>
+<p>共享 VLM 接收当前观测、指令和状态演化记忆。方法图还显示 Prior Subtask History，并连接 Action Head、Subtask Head 和 Keyframe Head。</p>
+<p>对于普通长时程任务，系统沿直接动作路径生成 action chunk；对于需要多阶段规划的任务，先生成可执行 subtask，再把它作为动作生成的附加条件。子任务在这里是控制的中间条件，而不是已经验证正确的环境事实。</p>
+<p>“共享”与“分任务训练”的关系需要说清：项目说明每个仿真 benchmark 联合训练一个策略；真机按 embodiment 各训练一个策略。因此，它没有展示一个统一权重同时覆盖两个仿真 benchmark 和两种真机平台的结果。</p>
+<h3 id="3-4-对-JEPA-研究，变化编码和未来预测分别回答什么？">3.4 对 JEPA 研究，变化编码和未来预测分别回答什么？</h3>
+<p>Delta Tokenizer 回答“这对已观测状态之间发生了什么变化”；动作条件世界模型回答“执行给定动作后，未来会怎样变化”。两者可以组成训练接口，但其学习信号不能混为一谈。</p>
+<p>若后续用 JEPA 训练变化表示，必须额外检查：表示能否区分交互完成与失败，能否对视角和背景变化保持稳定，以及它是否改善历史不可见后的决策。这些是下面提出的研究实验，并非项目已经完成的验证。</p>
+<h2 id="4-实验结果">4.实验结果</h2>
+<h3 id="4-1-总体结果与比较范围">4.1 总体结果与比较范围</h3>
+<table>
+<thead>
+<tr>
+<th>设置</th>
+<th style="text-align:right">EvoMem-VLA 成功率</th>
+<th style="text-align:right">项目列出的此前最佳比较值</th>
+<th style="text-align:right">差值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RMBench，9 个双臂操作任务</td>
+<td style="text-align:right">80.7%</td>
+<td style="text-align:right">67.8%</td>
+<td style="text-align:right">+12.9 个百分点</td>
+</tr>
+<tr>
+<td>RoboMME，16 个记忆任务</td>
+<td style="text-align:right">82.0%</td>
+<td style="text-align:right">44.5%</td>
+<td style="text-align:right">+37.5 个百分点</td>
+</tr>
+<tr>
+<td>真机，4 任务 × 2 平台</td>
+<td style="text-align:right">83.8%</td>
+<td style="text-align:right">πMEM：30.0%</td>
+<td style="text-align:right">+53.8 个百分点</td>
+</tr>
+</tbody>
+</table>
+<p>“此前最佳”限定为项目比较的方法，不能外推为所有已发表方法的最新排名。特别是这里没有公开列出 T²Mem 等工作的同协议比较，不能把不同文章的 RoboMME 总分拼成严格排行榜。网页也未提供完整仿真评估次数、训练预算、多随机种子方差和逐任务结果。</p>
+<h3 id="4-2-消融：变化表示与子任务条件各贡献多少？">4.2 消融：变化表示与子任务条件各贡献多少？</h3>
+<p>项目报告以下 RMBench 受控消融，说明各版本使用相同训练与评估协议：</p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th style="text-align:right">M(1)</th>
+<th style="text-align:right">M(n)</th>
+<th style="text-align:right">Overall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EvoMem-VLA</td>
+<td style="text-align:right">84.0%</td>
+<td style="text-align:right">76.5%</td>
+<td style="text-align:right">80.7%</td>
+</tr>
+<tr>
+<td>换成朴素特征差</td>
+<td style="text-align:right">52.0%</td>
+<td style="text-align:right">41.0%</td>
+<td style="text-align:right">47.1%</td>
+</tr>
+<tr>
+<td>移除 subtask route</td>
+<td style="text-align:right">84.0%</td>
+<td style="text-align:right">33.0%</td>
+<td style="text-align:right">61.3%</td>
+</tr>
+<tr>
+<td>移除 delta tokens</td>
+<td style="text-align:right">59.0%</td>
+<td style="text-align:right">44.0%</td>
+<td style="text-align:right">52.3%</td>
+</tr>
+<tr>
+<td>同时移除 delta tokens 与 subtask route</td>
+<td style="text-align:right">55.0%</td>
+<td style="text-align:right">31.0%</td>
+<td style="text-align:right">44.3%</td>
+</tr>
+</tbody>
+</table>
+<p>M(1) 表示只需一个任务相关过去观测，M(n) 表示需要多个过去观测；这一区分本身不等同于单阶段／多阶段标签。</p>
+<p>完整系统移除 delta tokens 后，Overall 下降 28.4 个百分点；移除 subtask route 后下降 19.4 个百分点。后者在 M(1) 保持 84.0%，在 M(n) 从 76.5% 降至 33.0%，显示复杂历史任务受子任务条件影响更大。</p>
+<p>这两种贡献不能简单相加：相对同时移除两者的 44.3%，只保留 delta tokens 的结果是 61.3%，只保留 subtask route 是 52.3%，两者都保留是 80.7%。数据支持二者共同作用，也提醒我们必须控制训练条件与任务分组，不能用一个总分把提升全部归给记忆。</p>
+<h3 id="4-3-真机：成功率与演示片段是不同证据">4.3 真机：成功率与演示片段是不同证据</h3>
+<p><img src="/img/EvoMem-VLA-real-world.png" alt="四种真机任务与两种机器人平台，来自项目页结果图"></p>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>依赖的历史信息</th>
+<th style="text-align:right">两平台平均成功率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lift Cup</td>
+<td>卡片要求的次数与已完成次数</td>
+<td style="text-align:right">85.0%</td>
+</tr>
+<tr>
+<td>Cover Ducks</td>
+<td>杯子下的鸭子身份与揭盖顺序</td>
+<td style="text-align:right">90.0%</td>
+</tr>
+<tr>
+<td>Route Recall</td>
+<td>人示范的 3–6 个盒子顺序，允许重复</td>
+<td style="text-align:right">75.0%</td>
+</tr>
+<tr>
+<td>Put Back Cup</td>
+<td>杯子移走之前所在的初始盒子</td>
+<td style="text-align:right">85.0%</td>
+</tr>
+</tbody>
+</table>
+<p>平台是 Franka 单臂与 AgileX COBOT 双臂。每任务、每平台评估 10 个 episode，总计 80 次；四项均值为 83.75%，按一位小数报告为 83.8%。每任务跨两平台共 20 次，因此一个 episode 就对应该任务均值的 5 个百分点。</p>
+<p>网页提供 20 个代表性的成功录像，并注明不同视角不同步。这些录像用于说明任务过程；成功率来自独立评估统计，不能从展示录像的成功比例重新估计，也不能把不同视角当作同步传感器轨迹进行分析。</p>
+<h3 id="4-4-公开证据尚未覆盖的内容">4.4 公开证据尚未覆盖的内容</h3>
+<p>项目没有给出变化编码的训练目标、完整算力与延迟、记忆容量曲线、长于训练长度的任务结果或记忆替换干预。论文和实现开放后，应优先核对：delta token 是否真的需要时间方向、keyframe 模块的独立收益，以及背景／相机变化对编码的干扰。</p>
+<h2 id="5-Takeaways">5.Takeaways:</h2>
+<h3 id="5-1-最有价值的贡献：把交互变化变成策略的显式证据">5.1 最有价值的贡献：把交互变化变成策略的显式证据</h3>
+<p>我更看重其问题组织方式：记忆不仅应恢复某个过去状态，还应保留“什么交互已经发生”。状态与变化绑定有助于描述计数、顺序和阶段进度，RMBench 的 delta 消融提供了直接支持。</p>
+<p>但<strong>端点变化并不保证保留全部过程</strong>。如果一个物体被移动后又放回，两张端点图像可能几乎相同；若完整循环发生在采样间隔之内，单个帧对仍难以恢复次数。这是基于输入信息的分析，尚非项目报告的失败实验。</p>
+<h3 id="5-2-和已有记忆路线怎么区分？">5.2 和已有记忆路线怎么区分？</h3>
+<table>
+<thead>
+<tr>
+<th>工作</th>
+<th>主要保存或建模的内容</th>
+<th>读出服务于什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/reandings/T2Mem/">T²Mem</a></td>
+<td>episode 内快速权重中的观测关联</td>
+<td>VLA 动作生成</td>
+</tr>
+<tr>
+<td><a href="/reandings/World-T3/">World-T³</a></td>
+<td>位姿与场景内容的参数化关联</td>
+<td>视频世界模型重访</td>
+</tr>
+<tr>
+<td>EvoMem-VLA</td>
+<td>历史状态与已发生变化的 token 证据</td>
+<td>动作与可执行子任务</td>
+</tr>
+<tr>
+<td><a href="/reandings/Slot-JEPA/">Slot-JEPA</a></td>
+<td>固定 slot 基底下的观测转移</td>
+<td>动作条件未来 mask 预测与规划</td>
+</tr>
+</tbody>
+</table>
+<p>因此后续工作不能只以“加入变化 token”为创新表述。更有区分度的问题是：动作相关变化怎样被识别、如何与对象身份绑定，以及什么时候旧状态应当被覆盖。</p>
+<h3 id="5-3-面向-JEPA-VLA-Memory-的实验设计">5.3 面向 JEPA + VLA + Memory 的实验设计</h3>
+<p>以下是研究建议，不是原项目结果：</p>
+<ol>
+<li>**先隔离变化编码。**固定 VLA、数据、历史帧、token 预算和训练步数，对比状态记忆、朴素特征差、学习型变化编码，以及加入动作条件 JEPA 目标的版本；先固定 subtask route，再测试与其组合。</li>
+<li>**分别测试三个信息问题。**交换帧对顺序检验方向；替换源帧检验状态绑定；遮掉任务关键变化而保留相机运动，检查表示是否依赖无关视觉差异。</li>
+<li>**检验循环和更新。**加入移动后复位、按键失败、他人移动物体、阶段回退等轨迹，区分“动作发出”“交互完成”和“当前状态已改变”。</li>
+<li>**做记忆干预。**清空、打乱或跨任务交换 delta tokens，并在状态帧保持一致时比较动作变化。仅有准确率提升，尚不足以说明策略确实读取了正确历史。</li>
+<li>**同时报告代价。**除成功率外，测计数误差、阶段切换误差、身份一致性、token 数、推理延迟与随任务时长增长的存储开销。</li>
+</ol>
+<h3 id="5-4-组会三分钟总结">5.4 组会三分钟总结</h3>
+<p>EvoMem-VLA 研究长任务里“看起来一样但该做的动作不同”的问题。它用冻结 DINOv3 与学习型 Delta Encoder，把有序观测对编码成与状态绑定的变化 token；近期变化链与部分设置启用的关键帧变化记忆供共享 VLM 使用，多阶段任务再生成子任务条件。项目报告 RMBench 80.7%、RoboMME 82.0%、真机 83.8%。最直接证据是移除 delta tokens 后 RMBench 从 80.7% 降到 52.3%，朴素差分也只有 47.1%。对我的研究，其启发是把历史状态、已发生变化和下一步预测联系起来；需要补充的验证是变化是否保留对象身份和真实完成状态，以及循环、遮挡和外部干预下能否正确更新。当前只公开项目资料，论文训练细节与代码仍待核验。</p>
+<h3 id="5-5-来源定位">5.5 来源定位</h3>
+<ul>
+<li>项目页 Abstract、Method、Evaluation、RMBench ablation table：问题定义、框架与主要结果。</li>
+<li>项目页 architecture、overview、real-world 原图：模块连接、记忆组成与真机逐任务结果。</li>
+<li>官方 README：QwenOFT、各 benchmark 记忆配置、联合训练范围与发布状态。</li>
+<li>项目页任务切换数据与演示说明：四任务要求、每任务每平台 10 次评估、录像展示范围。</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>EvoMem-VLA | State-Evolution Memory | Project Reading</p><p><a href="https://fanchenlex.github.io/reandings/EvoMem-VLA/">https://fanchenlex.github.io/reandings/EvoMem-VLA/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Wenzhuo Li</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2026-11-08</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2026-11-08</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/paper-reading/">paper reading</a></div><div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_copy_link"></a><a class="a2a_button_google_translate"></a><a class="a2a_button_wechat"></a><a class="a2a_button_qzone"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_twitter"></a><a class="a2a_button_print"></a></div><script async src="https://static.addtoany.com/menu/page.js"></script></div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/Alipay.JPG" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechatpay.png" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/reandings/Slot-JEPA/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Slot-JEPA | arxiv 2026.10.20 | Paper Reading</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/reandings/World-T3/"><span class="level-item">World-T³ | arxiv 2026.10.12 | Paper Reading</span><i class="level-item fas fa-chevron-right"></i></a></div></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/profile%20ai.png" alt="Wenzhuo Li"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Wenzhuo Li</p><p class="is-size-6 is-block">Embodied AI</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>PALM Lab, Nanjing, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">80</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories/"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">14</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded is-flex is-align-items-center" href="https://github.com/fanchenlex" target="_blank" rel="me noopener"><span class="icon is-small mr-1"><i class="fab fa-github"></i></span><span>Follow</span></a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="WeChat" href="https://fanchenlex.github.io/img/WeChat.jpg" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/WeChat_icon.png" alt="WeChat" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="QQ" href="https://fanchenlex.github.io/img/qq.jpg" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/QQ_icon.png" alt="QQ" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Google Scholar" href="https://scholar.google.com/citations?user=fyi3WJsAAAAJ&amp;hl=zh-CN" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/Google_Scholar_logo.png" alt="Google Scholar" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="WeeklyLog" href="https://fanchenlex.github.io/pdf/WeeklyLog2026.pdf" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/WeeklyLog.png" alt="WeeklyLog" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="RSS" href="/atom.xml" style="display:flex;alignItems:center;padding:0.5rem;"><img src="/img/RSS.gif" alt="RSS" style="width:2.5rem;height:2.5rem;objectFit:contain;borderRadius:50%;backgroundColor:rgba(255, 255, 255, 0.1);padding:0.5rem;"></a></div></div><style>
+				.widget[data-type=&quot;profile&quot;] .level-item.button img {
+					transition: all 0.3s ease;
+					opacity: 0.8;
+				}
+				
+				.widget[data-type=&quot;profile&quot;] .level-item.button:hover img {
+					opacity: 1;
+					transform: scale(1.1);
+					background-color: rgba(255, 255, 255, 0.2);
+				}
+				
+				.widget[data-type=&quot;profile&quot;] .level-item.button:hover i {
+					transform: scale(1.1);
+				}
+			</style></div><!--!--><div class="card widget"><div class="card-content"><h3 class="menu-label"><i class="fas fa-bullhorn" style="margin-right: 6px;"></i>ANNOUNCEMENT</h3><div class="announcement"><ul class="menu-list"><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/publications/StateMem/">[2026-09-22] Published my first paper on arXiv! 🎉</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/quanzhouxiamen/">[2026-02-15] Had a special New Year in Hokkien.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/southeast_letter/">[2025-07-02] Unboxing the Southeast University Graduate Admission Letter.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/japan_Kansai/">[2025-07-01] Completed graduation trip with my mom —— Kansai, Japan.</a></li><li><i class="fas fa-megaphone" style="color: #3498db; margin-right: 6px;"></i><a class="announcement-link" href="/diary/xidian_memories/">[2025-06-20] Graduating from Xidian University.</a></li></ul></div><div style="margin-top: 10px; text-align: center;"><a href="/announcement/">View All Announcements &gt;&gt;</a></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Awards/"><span class="level-start"><span class="level-item">Awards</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/blogs/"><span class="level-start"><span class="level-item">blogs</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/courses/"><span class="level-start"><span class="level-item">courses</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/diary/"><span class="level-start"><span class="level-item">diary</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/projects/"><span class="level-start"><span class="level-item">projects</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/publications/"><span class="level-start"><span class="level-item">publications</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/readings/"><span class="level-start"><span class="level-item">readings</span></span><span class="level-end"><span class="level-item tag">52</span></span></a></li></ul></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2026/11/"><span class="level-start"><span class="level-item">November 2026</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/10/"><span class="level-start"><span class="level-item">October 2026</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/09/"><span class="level-start"><span class="level-item">September 2026</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/08/"><span class="level-start"><span class="level-item">August 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/07/"><span class="level-start"><span class="level-item">July 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/06/"><span class="level-start"><span class="level-item">June 2026</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/05/"><span class="level-start"><span class="level-item">May 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/04/"><span class="level-start"><span class="level-item">April 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/03/"><span class="level-start"><span class="level-item">March 2026</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/02/"><span class="level-start"><span class="level-item">February 2026</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2026/01/"><span class="level-start"><span class="level-item">January 2026</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/11/"><span class="level-start"><span class="level-item">November 2025</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/10/"><span class="level-start"><span class="level-item">October 2025</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/07/"><span class="level-start"><span class="level-item">July 2025</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/06/"><span class="level-start"><span class="level-item">June 2025</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/11/"><span class="level-start"><span class="level-item">November 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/06/"><span class="level-start"><span class="level-item">June 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget"><div class="card-content"><h3 class="menu-label">Recents</h3><div class="recent-posts"><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/Slot-JEPA.jpg" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-11-08</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/Slot-JEPA/">Slot-JEPA | arxiv 2026.10.20 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/EvoMem-VLA.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-11-08</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/EvoMem-VLA/">EvoMem-VLA | State-Evolution Memory | Project Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/World-T3.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-11-02</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/World-T3/">World-T³ | arxiv 2026.10.12 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/T2Mem.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-10-28</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/T2Mem/">T²Mem | arxiv 2026.09.29 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div><div class="media" style="display:flex;align-items:flex-start;margin-bottom:15px;"><div class="media-left" style="margin-right:10px;"><p class="image is-64x64"><img src="/img/Value-as-Memory.png" alt="thumbnail" style="object-fit:cover;"></p></div><div class="media-content"><p style="color: #888; font-size: 0.85em; margin:0;">2026-10-22</p><p style="margin:0;"><a class="recent-title-link" href="/reandings/Value-as-Memory/">Value as Memory | arxiv 2026.10.15 | Paper Reading</a></p><p style="margin:0;"><a class="recent-category-link" href="/categories/readings/">readings</a></p></div></div></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Academic-Writing/"><span class="tag">Academic Writing</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/International-Communication/"><span class="tag">International Communication</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Technical-Communication/"><span class="tag">Technical Communication</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/addmission-letter/"><span class="tag">addmission letter</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/concert/"><span class="tag">concert</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/grades/"><span class="tag">grades</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/graduation/"><span class="tag">graduation</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hand-gesture/"><span class="tag">hand gesture</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/opening-ceremony/"><span class="tag">opening ceremony</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/paper/"><span class="tag">paper</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/paper-reading/"><span class="tag">paper reading</span><span class="tag">50</span></a></div><div class="control"><a class="tags has-addons" href="/tags/reading-group/"><span class="tag">reading group</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/study-notes/"><span class="tag">study notes</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/travel/"><span class="tag">travel</span><span class="tag">4</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Zhuo&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2026 Wenzhuo Li</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p><div class="footer-donate" style="marginTop:1.5em;"><p class="is-size-7 has-text-centered has-text-weight-bold">如果你喜欢本站内容，可以请我喝杯咖啡 ☕</p><div class="donate-icons" style="display:flex;gap:1rem;marginTop:1em;"><div class="donate-icon-item" style="position:relative;"><a title="alipay"><i class="fab fa-alipay" style="fontSize:1.5rem;cursor:pointer;"></i></a><div class="donate-qrcode" style="position:absolute;bottom:150%;left:50%;transform:translateX(-50%);background:#fff;padding:8px;border:1px solid #ddd;boxShadow:0 2px 6px rgba(0,0,0,0.15);zIndex:100;"><img src="/img/Alipay.JPG" alt="alipay 收款码" style="width:240px;height:auto;display:block;"><div class="has-text-centered is-size-7" style="marginTop:0.5em;">ALIPAY</div></div></div><div class="donate-icon-item" style="position:relative;"><a title="wechat"><i class="fab fa-weixin" style="fontSize:1.5rem;cursor:pointer;"></i></a><div class="donate-qrcode" style="position:absolute;bottom:150%;left:50%;transform:translateX(-50%);background:#fff;padding:8px;border:1px solid #ddd;boxShadow:0 2px 6px rgba(0,0,0,0.15);zIndex:100;"><img src="/img/wechatpay.png" alt="wechat 收款码" style="width:240px;height:auto;display:block;"><div class="has-text-centered is-size-7" style="marginTop:0.5em;">WECHAT</div></div></div></div></div></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Bilibili" href="https://space.bilibili.com/1613486248?spm_id_from=333.1007.0.0" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Bilibili.svg" alt="Bilibili" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CSDN" href="https://blog.csdn.net/bjddmzdz?type=blog" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/csdn.png" alt="CSDN" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Rednote" href="https://www.xiaohongshu.com/user/profile/611202a5000000000101c50e" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Rednote.png" alt="Rednote" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Notion" href="https://ruby-uranium-845.notion.site/Research-Paper-Planner-201dc477df6b804ba4bad373196d5f03" style="padding:0.5rem;width:3rem;height:3rem;display:flex;justifyContent:center;alignItems:center;"><img src="/img/Notion.png" alt="Notion" style="maxWidth:100%;maxHeight:100%;objectFit:contain;"></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><script src="/js/night.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script><script type="text/javascript" src="/js/universe.js"></script></body></html>
